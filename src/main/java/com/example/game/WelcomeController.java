@@ -1,7 +1,10 @@
 package com.example.game;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -15,9 +18,14 @@ public class WelcomeController {
     private Label developersText;
 
     @FXML
-    protected void onPlayButtonClick() throws java.io.IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(WelcomeController.class.getResource("configuration.fxml"));
-        Scene next = new Scene(fxmlLoader.load(), 320, 240);
+    protected void onPlayButtonClick(ActionEvent e) throws java.io.IOException {
+        FXMLLoader configPaneLoader = new FXMLLoader(
+                TowerDefenseApplication.class.getResource("configuration.fxml"));
+        Parent configScreen = configPaneLoader.load();
+        Scene configScene = new Scene(configScreen, 500, 500);
+        configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setScene(configScene);
     }
 
     @FXML
