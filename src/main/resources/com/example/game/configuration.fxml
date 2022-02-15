@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.game.ConfigurationController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <top>
+        <VBox alignment="TOP_CENTER">
+            <Label fx:id="initText" wrapText="true" alignment="CENTER" textFill="black">
+                <font>
+                    <Font name="Arial Black" size="18"/>
+                </font>
+            </Label>
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Label fx:id="nameText" >
+                    <font>
+                        <Font name="Arial Black" size="18"/>
+                    </font>
+                </Label>
+                <padding>
+                    <Insets right="20.0" />
+                </padding>
+                <TextField fx:id="name" >
+                    <font>
+                        <Font name="Arial" size="18"/>
+                    </font>
+                </TextField>
+            </HBox>
+
+            <HBox alignment="CENTER">
+                <padding>
+                    <Insets top="10.0" />
+                </padding>
+                <Label fx:id="levelText" >
+                    <font>
+                        <Font name="Arial Black" size="18"/>
+                    </font>
+                </Label>
+
+                <VBox>
+                    <Button fx:id="easy" onAction="#onEasy"/>
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </VBox>
+
+                <VBox>
+                    <Button fx:id="medium" onAction="#onMedium"/>
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </VBox>
+                <VBox>
+                    <Button fx:id="hard" onAction="#onHard"/>
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </VBox>
+
+
+<!--                    <font>-->
+<!--                        <Font name="Arial" size="18"/>-->
+<!--                    </font>-->
+<!--                </Button>-->
+<!--                <Button fx:id="medium">-->
+<!--                    <font>-->
+<!--                        <Font name="Arial" size="18"/>-->
+<!--                    </font>-->
+<!--                </Button>-->
+<!--                <Button fx:id="hard">-->
+<!--                    <font>-->
+<!--                        <Font name="Arial" size="18"/>-->
+<!--                    </font>-->
+<!--                </Button>-->
+            </HBox>
+            <HBox alignment="CENTER">
+                <padding>
+                    <Insets top="40.0" />
+                </padding>
+                <Button fx:id="begin" onAction="#onBegin"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
