@@ -13,7 +13,7 @@ public class TowerDefenseApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(TowerDefenseApplication.class.getResource("welcome.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
         scene.getRoot().setStyle("-fx-font-family: 'Arial'");
-        stage.setTitle("Welcome Screen");
+        stage.setTitle("Welcome");
         stage.setScene(scene);
         stage.show();
     }

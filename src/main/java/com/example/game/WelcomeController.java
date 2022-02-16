@@ -25,6 +25,7 @@ public class WelcomeController {
         Scene configScene = new Scene(configScreen, 500, 500);
         configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setTitle("Configuration");
         stage.setScene(configScene);
     }
 

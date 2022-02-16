@@ -48,16 +48,14 @@ public class ConfigurationController {
 
     }
     @FXML
-    protected void onEasy(ActionEvent e) {
-        level = "Easy";
-    }
+    protected void onEasy(ActionEvent e) { level = "EASY"; }
     @FXML
     protected void onMedium(ActionEvent e) {
-        level = "Medium";
+        level = "MEDIUM";
     }
     @FXML
     protected void onHard(ActionEvent e) {
-        level = "Hard";
+        level = "HARD";
     }
     @FXML
     protected void onBegin(ActionEvent e) throws IOException {
@@ -79,11 +77,16 @@ public class ConfigurationController {
 
     protected void gameScreen(ActionEvent e) throws IOException {
         FXMLLoader gamePaneLoader = new FXMLLoader(
-                TowerDefenseApplication.class.getResource("welcome.fxml"));
+                TowerDefenseApplication.class.getResource("game.fxml"));
         Parent gameScreen = gamePaneLoader.load();
+
+        LandscapeController child = gamePaneLoader.getController();
+        child.setMoney(this.level);
+
         Scene gameScene = new Scene(gameScreen, 500, 500);
         gameScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setTitle("Game Landscape");
         stage.setScene(gameScene);
     }
 
