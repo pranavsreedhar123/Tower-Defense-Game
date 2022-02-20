@@ -4,13 +4,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -35,6 +41,9 @@ public class ConfigurationController {
     @FXML
     private Button begin;
 
+    private GameDetails gameDetails;
+    private int money;
+
     @FXML
     private void initialize() {
         initText.setText("Welcome to the Tower Defense Game!");
@@ -48,14 +57,19 @@ public class ConfigurationController {
 
     }
     @FXML
-    protected void onEasy(ActionEvent e) { level = "EASY"; }
+    protected void onEasy(ActionEvent e) {
+        level = "EASY";
+        money = 500;
+    }
     @FXML
     protected void onMedium(ActionEvent e) {
         level = "MEDIUM";
+        money = 250;
     }
     @FXML
     protected void onHard(ActionEvent e) {
         level = "HARD";
+        money = 100;
     }
     @FXML
     protected void onBegin(ActionEvent e) throws IOException {
@@ -71,6 +85,8 @@ public class ConfigurationController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Name: " + name.getText() + "\nLevel: " + level);
             //alert.getDialogPane().setExpandableContent(new Label("Name: " + name.getText() + "\nLevel: " + level));
             alert.showAndWait();
+            gameDetails = new GameDetails(this.money, this.level, this.name.getText());
+            StoreGame.setGameDetails(gameDetails);
             gameScreen(e);
         }
     }
@@ -79,15 +95,41 @@ public class ConfigurationController {
         FXMLLoader gamePaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("game.fxml"));
         Parent gameScreen = gamePaneLoader.load();
-
-        LandscapeController child = gamePaneLoader.getController();
-        child.setMoney(this.level);
-
-        Scene gameScene = new Scene(gameScreen, 500, 500);
+        Scene gameScene = new Scene(gameScreen, 1000, 1000);
         gameScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Game Landscape");
         stage.setScene(gameScene);
+
+
+
+
+
+//        Image image = new Image("https://lv7ms1pq6dm2sea8j1mrajzw-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/GT-1200x675.jpg");
+//
+//        //Setting the image view
+//        ImageView imageView = new ImageView(image);
+//
+//        //Setting the position of the image
+//        imageView.setX(50);
+//        imageView.setY(25);
+//
+//        //setting the fit height and width of the image view
+//        imageView.setFitHeight(455);
+//        imageView.setFitWidth(500);
+//
+//        //Setting the preserve ratio of the image view
+//        imageView.setPreserveRatio(true);
+//
+//        //Creating a Group object
+//        Group root = new Group(imageView);
+//
+//
+//        Scene gameScene = new Scene(root, 500, 500);
+//        gameScene.getRoot().setStyle("-fx-font-family: 'Arial'");
+//        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+//        stage.setTitle("Game Landscape");
+//        stage.setScene(gameScene);
     }
 
 }
