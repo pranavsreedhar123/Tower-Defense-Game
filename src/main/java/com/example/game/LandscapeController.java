@@ -34,6 +34,8 @@ public class LandscapeController {
     private Integer HARD_MONEY = 100;
     private GameDetails gameDetails;
     private Image backgroundImage;
+    private Image quitImg;
+
 
 
 
@@ -65,24 +67,32 @@ public class LandscapeController {
             background.setFitWidth(820);
             background.setFitHeight(500);
             background.setPreserveRatio(true);
-
-//            Image buttonImg = new Image("../../main/resources/com/example/game/assets/images/Quit.png");
-//            ImageView quitImg = new ImageView(buttonImg);
-//            quitImg.setFitHeight(80);
-//            quitImg.setPreserveRatio(true);
-//            quit.setGraphic(quitImg);
+            try {
+                URL url = TowerDefenseApplication.class.getResource("assets/images/Quit.png");
+                quitImg = new Image(String.valueOf(url));
+            } catch (IllegalArgumentException exception) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error in accessing assets");
+                alert.show();
+            }
+            ImageView quitImgView = new ImageView();
+            quitImgView.setImage(quitImg);
+            quitImgView.setFitHeight(30);
+            quitImgView.setFitWidth(30);
+            quitImgView.setPreserveRatio(true);
+            quit.setGraphic(quitImgView);
         }
     }
-//    protected void onHomePage(ActionEvent e) throws IOException {
-//        FXMLLoader homePaneLoader = new FXMLLoader(
-//                TowerDefenseApplication.class.getResource("configuration.fxml"));
-//        Parent homeScreen = homePaneLoader.load();
-//        Scene homeScene = new Scene(homeScreen, 800, 480);
-//        homeScene.getRoot().setStyle("-fx-font-family: 'Arial'");
-//        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-//        stage.setTitle("Homepage");
-//        stage.setScene(homeScene);
-//    }
+    @FXML
+    protected void onHomeScreen(ActionEvent e) throws java.io.IOException {
+        FXMLLoader configPaneLoader = new FXMLLoader(
+                TowerDefenseApplication.class.getResource("configuration.fxml"));
+        Parent configScreen = configPaneLoader.load();
+        Scene configScene = new Scene(configScreen, 750, 480);
+        configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setTitle("Configuration");
+        stage.setScene(configScene);
+    }
 
 //    public void setMoney(String difficulty) {
 //        this.moneyText.setTextFill(Color.GREEN);

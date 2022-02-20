@@ -9,9 +9,9 @@
 <?import javafx.geometry.Insets?>
 <GridPane xmlns:fx="http://javafx.com/fxml" prefHeight="480" prefWidth="750" fx:controller="com.example.game.LandscapeController">
         <ImageView fx:id="background"/>
-<!--        <VBox alignment="TOP_LEFT">-->
-<!--            <Button fx:id="quit" onAction="#onHomePage"/>-->
-<!--        </VBox>-->
+            <VBox alignment="TOP_LEFT">
+                <Button fx:id="quit" onAction="#onHomeScreen"/>
+            </VBox>
         <VBox fx:id="data" alignment="TOP_RIGHT">
             <Label fx:id="moneyText" wrapText="true" textFill="black">
                 <padding>
