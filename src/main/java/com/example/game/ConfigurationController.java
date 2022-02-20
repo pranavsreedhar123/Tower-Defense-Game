@@ -100,36 +100,6 @@ public class ConfigurationController {
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Game Landscape");
         stage.setScene(gameScene);
-
-
-
-
-
-//        Image image = new Image("https://lv7ms1pq6dm2sea8j1mrajzw-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/GT-1200x675.jpg");
-//
-//        //Setting the image view
-//        ImageView imageView = new ImageView(image);
-//
-//        //Setting the position of the image
-//        imageView.setX(50);
-//        imageView.setY(25);
-//
-//        //setting the fit height and width of the image view
-//        imageView.setFitHeight(455);
-//        imageView.setFitWidth(500);
-//
-//        //Setting the preserve ratio of the image view
-//        imageView.setPreserveRatio(true);
-//
-//        //Creating a Group object
-//        Group root = new Group(imageView);
-//
-//
-//        Scene gameScene = new Scene(root, 500, 500);
-//        gameScene.getRoot().setStyle("-fx-font-family: 'Arial'");
-//        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-//        stage.setTitle("Game Landscape");
-//        stage.setScene(gameScene);
     }
 
 }
