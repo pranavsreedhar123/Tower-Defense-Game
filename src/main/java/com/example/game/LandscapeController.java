@@ -87,7 +87,7 @@ public class LandscapeController {
         FXMLLoader configPaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("configuration.fxml"));
         Parent configScreen = configPaneLoader.load();
-        Scene configScene = new Scene(configScreen, 800, 480);
+        Scene configScene = new Scene(configScreen, 750, 480);
         configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Configuration");
