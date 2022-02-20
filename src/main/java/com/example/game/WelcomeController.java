@@ -22,7 +22,7 @@ public class WelcomeController {
         FXMLLoader configPaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("configuration.fxml"));
         Parent configScreen = configPaneLoader.load();
-        Scene configScene = new Scene(configScreen, 500, 500);
+        Scene configScene = new Scene(configScreen, 1000, 1000);
         configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Configuration");
