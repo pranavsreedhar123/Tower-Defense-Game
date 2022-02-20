@@ -53,10 +53,10 @@ public class LandscapeController {
                     URL url = TowerDefenseApplication.class.getResource("assets/images/Easy.jpg");
                     backgroundImage = new Image(String.valueOf(url));
                 } else if (level.equals("MEDIUM")) {
-                    URL url = TowerDefenseApplication.class.getResource("assets/images/Medium.png");
+                    URL url = TowerDefenseApplication.class.getResource("assets/images/Medium.jpg");
                     backgroundImage = new Image(String.valueOf(url));
                 } else if (level.equals("HARD")) {
-                    URL url = TowerDefenseApplication.class.getResource("assets/images/Hard.png");
+                    URL url = TowerDefenseApplication.class.getResource("assets/images/Hard.jpg");
                     backgroundImage = new Image(String.valueOf(url));
                 }
             } catch (IllegalArgumentException exception) {
