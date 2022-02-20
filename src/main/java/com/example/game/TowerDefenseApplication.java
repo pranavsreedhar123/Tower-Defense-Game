@@ -10,7 +10,9 @@ import java.io.IOException;
 public class TowerDefenseApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TowerDefenseApplication.class.getResource("welcome.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                TowerDefenseApplication.class.getResource("welcome.fxml")
+        );
         Scene scene = new Scene(fxmlLoader.load(), 800, 480);
         scene.getRoot().setStyle("-fx-font-family: 'Arial'");
         stage.setTitle("Welcome");

@@ -3,22 +3,22 @@ package com.example.game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
+//import javafx.geometry.Insets;
+//import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+//import javafx.scene.image.Image;
+//import javafx.scene.image.ImageView;
+//import javafx.scene.layout.HBox;
+//import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
+//import java.io.File;
+//import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Objects;
+//import java.util.Objects;
 
 
 public class ConfigurationController {
@@ -82,8 +82,10 @@ public class ConfigurationController {
             //alert.getDialogPane().setExpandableContent(new Label("Please choose a valid level"));
             alert.showAndWait();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Name: " + name.getText() + "\nLevel: " + level);
-            //alert.getDialogPane().setExpandableContent(new Label("Name: " + name.getText() + "\nLevel: " + level));
+            Alert alert = new Alert(
+                    Alert.AlertType.INFORMATION,
+                    "Name: " + name.getText() + "\nLevel: " + level
+            );
             alert.showAndWait();
             gameDetails = new GameDetails(this.money, this.level, this.name.getText());
             StoreGame.setGameDetails(gameDetails);
