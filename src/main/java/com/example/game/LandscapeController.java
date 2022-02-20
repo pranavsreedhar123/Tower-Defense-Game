@@ -3,7 +3,7 @@ package com.example.game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
+//import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,10 +11,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+//import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.net.URL;
 
 
@@ -28,15 +28,9 @@ public class LandscapeController {
     @FXML
     private Button quit;
 
-
-    private Integer EASY_MONEY = 500;
-    private Integer MEDIUM_MONEY = 250;
-    private Integer HARD_MONEY = 100;
     private GameDetails gameDetails;
     private Image backgroundImage;
     private Image quitImg;
-
-
 
 
     @FXML
@@ -82,6 +76,7 @@ public class LandscapeController {
             quit.setGraphic(quitImgView);
         }
     }
+
     @FXML
     protected void onHomeScreen(ActionEvent e) throws java.io.IOException {
         FXMLLoader configPaneLoader = new FXMLLoader(
@@ -93,17 +88,4 @@ public class LandscapeController {
         stage.setTitle("Configuration");
         stage.setScene(configScene);
     }
-
-//    public void setMoney(String difficulty) {
-//        this.moneyText.setTextFill(Color.GREEN);
-//
-//        if (difficulty.equals("EASY")) {
-//            this.moneyText.setText("MONEY: " + this.EASY_MONEY.toString());
-//
-//        } else if (difficulty.equals("MEDIUM")) {
-//            this.moneyText.setText("MONEY: " + this.MEDIUM_MONEY.toString());
-//        } else if (difficulty.equals("HARD")) {
-//            this.moneyText.setText("MONEY: " + this.HARD_MONEY.toString());
-//        }
-//    }
 }
