@@ -39,17 +39,14 @@ public class LandscapeController {
             this.moneyText.toFront();
             try {
                 if (level.equals("EASY")) {
-                   // URL url = TowerDefenseApplication.class.getResource("../../main/resources/com/example/game/assets/images/Easy.jpg");
-                    //backgroundImage = new Image(String.valueOf(url));
-                    backgroundImage = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Georgia_Tech_Yellow_Jackets_logo.svg/1200px-Georgia_Tech_Yellow_Jackets_logo.svg.png");
+                    URL url = TowerDefenseApplication.class.getResource("assets/images/Easy.jpg");
+                    backgroundImage = new Image(String.valueOf(url));
                 } else if (level.equals("MEDIUM")) {
-                    // URL url = TowerDefenseApplication.class.getResource("../../main/resources/com/example/game/assets/images/Medium.png");
-                    //backgroundImage = new Image(String.valueOf(url));
-                    backgroundImage = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Georgia_Tech_Yellow_Jackets_logo.svg/1200px-Georgia_Tech_Yellow_Jackets_logo.svg.png");
+                    URL url = TowerDefenseApplication.class.getResource("assets/images/Medium.png");
+                    backgroundImage = new Image(String.valueOf(url));
                 } else if (level.equals("HARD")) {
-                    // URL url = TowerDefenseApplication.class.getResource("../../main/resources/com/example/game/assets/images/Hard.png");
-                    //backgroundImage = new Image(String.valueOf(url));
-                    backgroundImage = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Georgia_Tech_Yellow_Jackets_logo.svg/1200px-Georgia_Tech_Yellow_Jackets_logo.svg.png");
+                    URL url = TowerDefenseApplication.class.getResource("assets/images/Hard.png");
+                    backgroundImage = new Image(String.valueOf(url));
                 }
             } catch (IllegalArgumentException exception) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Check image");
@@ -57,8 +54,8 @@ public class LandscapeController {
             }
             background.setImage(backgroundImage);
 
-            background.setFitWidth(1000);
-            background.setFitHeight(1000);
+            background.setFitWidth(820);
+            background.setFitHeight(500);
             background.setPreserveRatio(true);
         }
     }
