@@ -75,6 +75,7 @@ public class ConfigurationController {
     protected void onBegin(ActionEvent e) throws IOException {
         if (name.getText().isBlank() || name.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please write a valid name");
+            level = "";
             //alert.getDialogPane().setExpandableContent(new Label("Please write a valid name"));
             alert.showAndWait();
         } else if (level.equals("")) {
