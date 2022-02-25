@@ -27,6 +27,8 @@ public class LandscapeController {
     private ImageView background;
     @FXML
     private Button quit;
+    @FXML
+    private Button shop;
 
     private GameDetails gameDetails;
     private Image backgroundImage;
@@ -42,6 +44,7 @@ public class LandscapeController {
             data.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             this.moneyText.setText("MONEY: " + gameDetails.getMoney());
             this.moneyText.toFront();
+            this.shop.setText("Open Shop!");
             try {
                 if (level.equals("EASY")) {
                     URL url = TowerDefenseApplication.class.getResource("assets/images/Easy.jpg");
@@ -86,6 +89,18 @@ public class LandscapeController {
         configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Configuration");
+        stage.setScene(configScene);
+    }
+
+    @FXML
+    protected void onShop(ActionEvent e) throws java.io.IOException {
+        FXMLLoader configPaneLoader = new FXMLLoader(
+                TowerDefenseApplication.class.getResource("shop.fxml"));
+        Parent configScreen = configPaneLoader.load();
+        Scene configScene = new Scene(configScreen, 750, 480);
+        configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setTitle("Shop");
         stage.setScene(configScene);
     }
 }
