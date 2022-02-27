@@ -98,7 +98,7 @@ public class ConfigurationController {
         FXMLLoader gamePaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("game.fxml"));
         Parent gameScreen = gamePaneLoader.load();
-        Scene gameScene = new Scene(gameScreen, 800, 480);
+        Scene gameScene = new Scene(gameScreen, 800, 500);
         gameScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Game Landscape");
