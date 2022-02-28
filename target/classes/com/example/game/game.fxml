@@ -2,7 +2,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 <GridPane fx:id="map" xmlns:fx="http://javafx.com/fxml"
           prefHeight="480" prefWidth="750"

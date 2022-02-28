@@ -22,7 +22,7 @@
         </Label>
         <HBox alignment="CENTER">
             <HBox>
-                <Button text="Play!" onAction="#onPlayButtonClick"/>
+                <Button fx:id="play" text="Play!" onAction="#onPlayButtonClick"/>
                 <padding>
                     <Insets top="20.0" right="10.0"/>
                 </padding>
