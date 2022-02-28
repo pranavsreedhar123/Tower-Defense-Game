@@ -1,33 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Font?>
-
-<?import javafx.scene.image.ImageView?>
 <?import javafx.geometry.Insets?>
-<GridPane xmlns:fx="http://javafx.com/fxml" prefHeight="480" prefWidth="750" fx:controller="com.example.game.LandscapeController">
-        <ImageView fx:id="background"/>
-            <VBox alignment="TOP_LEFT">
-                <Button fx:id="quit" onAction="#onHomeScreen"/>
-            </VBox>
-        <VBox fx:id="data" alignment="TOP_RIGHT">
-                <Label fx:id="moneyText" wrapText="true" textFill="black">
-                    <padding>
-                        <Insets right="20.0" />
-                    </padding>
-                    <font>
-                        <Font name="Arial Black" size="12"/>
-                    </font>
-                </Label>
-        </VBox>
-        <VBox alignment="BOTTOM_LEFT">
-            <Button fx:id="shop" onAction="#onShop"/>
-            <padding>
-                <Insets right="15.0" bottom="20.0" left="10.0"/>
-            </padding>
-        </VBox>
+<?import javafx.scene.text.Font?>
+<GridPane fx:id="map" xmlns:fx="http://javafx.com/fxml"
+          prefHeight="480" prefWidth="750"
+          fx:controller="com.example.game.LandscapeController">
+
+    <VBox alignment="TOP_LEFT">
+        <Button fx:id="quit" onAction="#onHomeScreen"/>
+    </VBox>
+
+
+        <Label fx:id="moneyText" wrapText="true" textFill="black" prefHeight="100" prefWidth="100">
+
+            <font>
+                <Font name="Arial Black" size="35"/>
+            </font>
+        </Label>
+    <Label fx:id="healthText" wrapText="true" textFill="black" prefHeight="100" prefWidth="100">
+        <font>
+            <Font name="Arial Black" size="28"/>
+        </font>
+    </Label>
+    <Label fx:id="dynamicHealthText" wrapText="true" textFill="black" prefHeight="100" prefWidth="100">
+        <font>
+            <Font name="Arial Black" size="28"/>
+        </font>
+    </Label>
+    <Button fx:id="shop" onAction="#onShop"/>
+
 
 
 </GridPane>
+
+<!--<GridPane xmlns:fx="http://javafx.com/fxml" prefHeight="480" prefWidth="750" fx:controller="com.example.game.LandscapeController">-->
+<!--        <ImageView fx:id="background"/>-->
+<!--            <VBox alignment="TOP_LEFT">-->
+<!--                <Button fx:id="quit" onAction="#onHomeScreen"/>-->
+<!--            </VBox>-->
+<!--        <VBox fx:id="data" alignment="TOP_RIGHT">-->
+<!--                <Label fx:id="moneyText" wrapText="true" textFill="black">-->
+<!--                    <padding>-->
+<!--                        <Insets right="20.0" />-->
+<!--                    </padding>-->
+<!--                    <font>-->
+<!--                        <Font name="Arial Black" size="12"/>-->
+<!--                    </font>-->
+<!--                </Label>-->
+<!--        </VBox>-->
+<!--        <VBox alignment="BOTTOM_LEFT">-->
+<!--            <Button fx:id="shop" onAction="#onShop"/>-->
+<!--            <padding>-->
+<!--                <Insets right="15.0" bottom="20.0" left="10.0"/>-->
+<!--            </padding>-->
+<!--        </VBox>-->
+
+
+<!--</GridPane>-->

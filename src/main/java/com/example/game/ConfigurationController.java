@@ -43,6 +43,7 @@ public class ConfigurationController {
 
     private GameDetails gameDetails;
     private int money;
+    private int health;
 
     @FXML
     private void initialize() {
@@ -60,16 +61,19 @@ public class ConfigurationController {
     protected void onEasy(ActionEvent e) {
         level = "EASY";
         money = 500;
+        health = 3000;
     }
     @FXML
     protected void onMedium(ActionEvent e) {
         level = "MEDIUM";
         money = 250;
+        health = 2000;
     }
     @FXML
     protected void onHard(ActionEvent e) {
         level = "HARD";
         money = 100;
+        health = 1000;
     }
     @FXML
     protected void onBegin(ActionEvent e) throws IOException {
@@ -88,7 +92,7 @@ public class ConfigurationController {
                     "Name: " + name.getText() + "\nLevel: " + level
             );
             alert.showAndWait();
-            gameDetails = new GameDetails(this.money, this.level, this.name.getText());
+            gameDetails = new GameDetails(this.money, this.health, this.level, this.name.getText());
             StoreGame.setGameDetails(gameDetails);
             gameScreen(e);
         }
@@ -98,7 +102,7 @@ public class ConfigurationController {
         FXMLLoader gamePaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("game.fxml"));
         Parent gameScreen = gamePaneLoader.load();
-        Scene gameScene = new Scene(gameScreen, 800, 500);
+        Scene gameScene = new Scene(gameScreen, 1200, 900);
         gameScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Game Landscape");

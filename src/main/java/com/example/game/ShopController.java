@@ -65,7 +65,7 @@ public class ShopController {
         FXMLLoader configPaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("game.fxml"));
         Parent configScreen = configPaneLoader.load();
-        Scene configScene = new Scene(configScreen, 800, 500);
+        Scene configScene = new Scene(configScreen, 1200, 900);
         configScene.getRoot().setStyle("-fx-font-family: 'Arial'");
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Game");
