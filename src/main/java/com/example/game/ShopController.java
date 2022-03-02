@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class ShopController {
@@ -21,7 +22,7 @@ public class ShopController {
     @FXML
     private Button quit;
     private Image quitImg;
-
+    private LandscapeController lsc = new LandscapeController();
     @FXML
     private Label eliteText;
     @FXML
@@ -81,6 +82,8 @@ public class ShopController {
             this.currentMoney -= this.ELITE_COST;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
+            lsc.enableTowerButtons();
+            lsc.clickTower();
         }
     }
 
@@ -93,6 +96,8 @@ public class ShopController {
             this.currentMoney -= this.NORMAL_COST;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
+            lsc.enableTowerButtons();
+            lsc.clickTower();
         }
     }
 
@@ -105,6 +110,8 @@ public class ShopController {
             this.currentMoney -= this.BAD_COST;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
+            lsc.enableTowerButtons();
+            lsc.clickTower();
         }
     }
 }
