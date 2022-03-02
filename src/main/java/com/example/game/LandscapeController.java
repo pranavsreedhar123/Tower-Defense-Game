@@ -4,9 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 //import javafx.scene.Group;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 //import java.io.IOException;
+import java.io.IOException;
 import java.net.URL;
 
 
@@ -34,10 +32,13 @@ public class LandscapeController {
     @FXML
     private Button shop;
     @FXML
+    private static Button[] backgroundButtonArray = new Button[108];
+    @FXML
     private GridPane map;
 
     private GameDetails gameDetails;
     private Image quitImg;
+
 
 
     @FXML
@@ -72,6 +73,7 @@ public class LandscapeController {
                     Button backgroundButton = new Button();
                     backgroundButton.setId(i + "," + j);
                     backgroundButton.setPrefSize(100, 100);
+
                     if ((i == 0 ) && (j == 0)) {
                         ImageView quitImgView = new ImageView();
                         quitImgView.setImage(quitImg);
@@ -126,12 +128,26 @@ public class LandscapeController {
                         continue;
                     }  else {
                        backgroundButton.setStyle("-fx-background-color: #00ff00; -fx-background-radius: 0");
+
                     }
                     map.add(backgroundButton, j, i);
+                    backgroundButtonArray[12*i + j] = backgroundButton;
                 }
             }
+            /*for (Button button: backgroundButtonArray) {
+                if (button != null) {
+                button.setOnAction(e-> {
+                    try {
+                        placeTower(button);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
+            } }*/
         }
     }
+
+
 
     @FXML
     protected void onHomeScreen(ActionEvent e) throws java.io.IOException {
@@ -155,5 +171,70 @@ public class LandscapeController {
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.setTitle("Shop");
         stage.setScene(configScene);
+    }
+
+    protected void clickTower() throws java.io.IOException {
+        for (Button button: backgroundButtonArray) {
+            if (button != null) {
+                if (button.getStyle().equals("-fx-background-color: #00ff00; -fx-background-radius: 0")) {
+                    button.setOnAction(e -> {
+                    /*try {
+                        placeTower(button);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }*/
+                        placeTower(button);
+
+                    });
+                }
+            }
+        }
+    }
+    protected void placeTower(Button backgroundButton)  {
+        String[] id = backgroundButton.getId().split(",");
+        System.out.println(backgroundButton.getStyle());
+        int row = Integer.parseInt(id[0]);
+        int col = Integer.parseInt(id[1]);
+
+        URL url = TowerDefenseApplication.class.getResource("assets/images/Tower.png");
+        Image towerImg = new Image(String.valueOf(url));
+
+        ImageView towerImgView = new ImageView();
+        towerImgView.setImage(towerImg);
+        //quit.setMaxSize(100, 100);
+        towerImgView.setFitHeight(100);
+        towerImgView.setFitWidth(92);
+        towerImgView.setPreserveRatio(true);
+        backgroundButton.setGraphic(towerImgView);
+        //quit.requestFocus();
+        towerImgView.setImage(towerImg);
+        System.out.println(row);
+        System.out.println(col);
+        map.setRowIndex(towerImgView, row);
+        map.setColumnIndex(towerImgView, col);
+        disableTowerButtons();
+        //backgroundButton.setStyle("-fx-background-color: #ff0000");
+
+        //quit.toFront();
+    }
+
+    protected void disableTowerButtons() {
+        for (Button b: backgroundButtonArray) {
+            if (b != null) {
+                b.setDisable(true);
+            }
+        }
+    }
+
+    /*This method is called by the LandScapeController
+    in ShopController so that when you go back to the shop
+    you can place a tower again.
+     */
+    protected void enableTowerButtons() {
+        for (Button b: backgroundButtonArray) {
+            if (b != null) {
+                b.setDisable(false);
+            }
+        }
     }
 }

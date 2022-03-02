@@ -78,6 +78,7 @@ public class ConfigurationController {
     @FXML
     protected void onBegin(ActionEvent e) throws IOException {
         if (name.getText().isBlank() || name.getText().isEmpty()) {
+            System.out.println("hi");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please write a valid name");
             level = "";
             //alert.getDialogPane().setExpandableContent(new Label("Please write a valid name"));
