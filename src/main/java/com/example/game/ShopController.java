@@ -20,7 +20,12 @@ public class ShopController {
     private Label shopText;
     @FXML
     private Button quit;
+
     private Image quitImg;
+    private Image badImg;
+    private Image normalImg;
+    private Image eliteImg;
+
     private LandscapeController lsc = new LandscapeController();
     @FXML
     private Label eliteText;
@@ -28,6 +33,12 @@ public class ShopController {
     private Label normalText;
     @FXML
     private Label badText;
+    @FXML
+    private ImageView badImage;
+    @FXML
+    private ImageView normalImage;
+    @FXML
+    private ImageView eliteImage;
 
     private GameDetails gameDetails;
     private int currentMoney;
@@ -37,6 +48,7 @@ public class ShopController {
 
     @FXML
     private void initialize() {
+
         this.shopText.setText("Welcome to the Shop!");
         gameDetails = StoreGame.getGameDetails();
         this.currentMoney = gameDetails.getMoney();
@@ -55,6 +67,42 @@ public class ShopController {
         quitImgView.setFitWidth(30);
         quitImgView.setPreserveRatio(true);
         quit.setGraphic(quitImgView);
+
+        try {
+            URL url = TowerDefenseApplication.class.getResource("assets/images/BadTower.png");
+            badImg = new Image(String.valueOf(url));
+        } catch (IllegalArgumentException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error in accessing assets");
+            alert.show();
+        }
+        badImage.setImage(badImg);
+        badImage.setFitHeight(200);
+        badImage.setFitWidth(200);
+        badImage.setPreserveRatio(true);
+
+        try {
+            URL url = TowerDefenseApplication.class.getResource("assets/images/NormalTower.png");
+            normalImg = new Image(String.valueOf(url));
+        } catch (IllegalArgumentException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error in accessing assets");
+            alert.show();
+        }
+        normalImage.setImage(normalImg);
+        normalImage.setFitHeight(200);
+        normalImage.setFitWidth(2090);
+        normalImage.setPreserveRatio(true);
+
+        try {
+            URL url = TowerDefenseApplication.class.getResource("assets/images/EliteTower.png");
+            eliteImg = new Image(String.valueOf(url));
+        } catch (IllegalArgumentException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error in accessing assets");
+            alert.show();
+        }
+        eliteImage.setImage(eliteImg);
+        eliteImage.setFitHeight(200);
+        eliteImage.setFitWidth(200);
+        eliteImage.setPreserveRatio(true);
     }
 
     @FXML
