@@ -32,9 +32,9 @@ public class ShopController {
 
     private GameDetails gameDetails;
     private int currentMoney;
-    private int ELITE_COST = 750;
-    private int NORMAL_COST = 500;
-    private int BAD_COST = 250;
+    private int ELITE_COST = 500;
+    private int NORMAL_COST = 250;
+    private int BAD_COST = 100;
 
     @FXML
     private Label shopMoney;
@@ -82,8 +82,9 @@ public class ShopController {
             this.currentMoney -= this.ELITE_COST;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
-            lsc.enableTowerButtons();
-            lsc.clickTower();
+            //lsc.enableTowerButtons();
+            gameDetails.setImage("elite");
+            //lsc.clickTower();
         }
     }
 
@@ -96,8 +97,9 @@ public class ShopController {
             this.currentMoney -= this.NORMAL_COST;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
-            lsc.enableTowerButtons();
-            lsc.clickTower();
+            //lsc.enableTowerButtons();
+            gameDetails.setImage("normal");
+            //lsc.clickTower();
         }
     }
 
@@ -110,8 +112,9 @@ public class ShopController {
             this.currentMoney -= this.BAD_COST;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
-            lsc.enableTowerButtons();
-            lsc.clickTower();
+           // lsc.enableTowerButtons();
+            StoreGame.getGameDetails().setImage("bad");
+            //lsc.clickTower();
         }
     }
 }

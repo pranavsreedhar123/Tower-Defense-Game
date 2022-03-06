@@ -31,7 +31,7 @@
         <HBox alignment="CENTER">
             <HBox>
                 <VBox>
-                    <Button text="Buy!" onAction="#purchaseElite"/>
+                    <Button text="Buy $100!" onAction="#purchaseBad"/>
                     <padding>
                         <Insets top="20.0" right="20.0"/>
                     </padding>
@@ -42,7 +42,7 @@
                     <padding>
                         <Insets top="20.0" right="20.0"/>
                     </padding>
-                    <Button text="Buy!" onAction="#purchaseNormal"/>
+                    <Button text="Buy $250!" onAction="#purchaseNormal"/>
                 </VBox>
             </HBox>
             <HBox>
@@ -50,7 +50,7 @@
                     <padding>
                         <Insets top="20.0" right="20.0"/>
                     </padding>
-                    <Button text="Buy!" onAction="#purchaseBad"/>
+                    <Button text="Buy $500!" onAction="#purchaseElite"/>
                 </VBox>
             </HBox>
         </HBox>
