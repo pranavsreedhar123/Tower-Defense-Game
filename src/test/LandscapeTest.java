@@ -48,4 +48,63 @@ public class LandscapeTest extends ApplicationTest {
         clickOn("OK");
         verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 3000"));
     }
+
+    /**
+     * Tests if the level is medium, then the money is 250 dollars
+     */
+    @Test
+    public void testMediumMoney() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$250"));
+    }
+
+    /**
+     * Tests if the level is medium, then the health is 2000
+     */
+    @Test
+    public void testMediumHealth() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 2000"));
+    }
+    /**
+     * Tests if the level is hard, then the money is 100 dollars
+     */
+    @Test
+    public void testHardMoney() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#hard");
+        clickOn("#begin");
+        clickOn("OK");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$100"));
+    }
+
+    /**
+     * Tests if the level is hard, then the health is 1000
+     */
+    @Test
+    public void testHardHealth() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#hard");
+        clickOn("#begin");
+        clickOn("OK");
+        verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 1000"));
+    }
 }
