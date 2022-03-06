@@ -1,6 +1,5 @@
 package com.example.game;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
@@ -31,9 +30,15 @@ public class GameDetails {
     public void setName(String name) {
         this.name = name;
     }
-    public void setImage(String image) {this.image = image; }
-    public void setBackgroundButton(Button[] backgroundButton) {this.backgroundButton = backgroundButton;}
-    public void setMap(GridPane map) {this.map = map;}
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public void setBackgroundButton(Button[] backgroundButton) {
+        this.backgroundButton = backgroundButton;
+    }
+    public void setMap(GridPane map) {
+        this.map = map;
+    }
     public int getMoney() {
         return money;
     }
@@ -43,7 +48,13 @@ public class GameDetails {
     public String getLevel() {
         return level;
     }
-    public String getImage() { return image; }
-    public Button[] getBackgroundButton() { return backgroundButton; }
-    public GridPane getMap() { return  map;}
+    public String getImage() {
+        return image;
+    }
+    public Button[] getBackgroundButton() {
+        return backgroundButton;
+    }
+    public GridPane getMap() {
+        return  map;
+    }
 }
