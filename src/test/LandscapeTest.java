@@ -3,8 +3,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-import com.example.game.LandscapeController;
-import org.testfx.matcher.base.NodeMatchers;
+
 import org.testfx.matcher.control.LabeledMatchers;
 
 import static org.testfx.api.FxAssert.verifyThat;
@@ -13,7 +12,7 @@ public class LandscapeTest extends ApplicationTest {
     /**
      * Starts up TowerDefenseApplication.
      * @param stage Stage
-     * @throws Exception
+     * @throws Exception exception
      */
     @Override
     public void start(Stage stage) throws Exception {

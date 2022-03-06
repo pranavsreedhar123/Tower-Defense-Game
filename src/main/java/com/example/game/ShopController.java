@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 
 public class ShopController {
@@ -32,9 +31,6 @@ public class ShopController {
 
     private GameDetails gameDetails;
     private int currentMoney;
-    private int ELITE_COST = 500;
-    private int NORMAL_COST = 250;
-    private int BAD_COST = 100;
 
     @FXML
     private Label shopMoney;
@@ -75,46 +71,43 @@ public class ShopController {
 
     @FXML
     protected void purchaseElite(ActionEvent e) throws java.io.IOException {
-        if (this.currentMoney < this.ELITE_COST) {
+        int elitecost = 500;
+        if (this.currentMoney < elitecost) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
             alert.showAndWait();
         } else {
-            this.currentMoney -= this.ELITE_COST;
+            this.currentMoney -= elitecost;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
-            //lsc.enableTowerButtons();
             gameDetails.setImage("elite");
-            //lsc.clickTower();
         }
     }
 
     @FXML
     protected void purchaseNormal(ActionEvent e) throws java.io.IOException {
-        if (this.currentMoney < this.NORMAL_COST) {
+        int normalcost = 250;
+        if (this.currentMoney < normalcost) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
             alert.showAndWait();
         } else {
-            this.currentMoney -= this.NORMAL_COST;
+            this.currentMoney -= normalcost;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
-            //lsc.enableTowerButtons();
             gameDetails.setImage("normal");
-            //lsc.clickTower();
         }
     }
 
     @FXML
     protected void purchaseBad(ActionEvent e) throws java.io.IOException {
-        if (this.currentMoney < this.BAD_COST) {
+        int badcost = 100;
+        if (this.currentMoney < badcost) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
             alert.showAndWait();
         } else {
-            this.currentMoney -= this.BAD_COST;
+            this.currentMoney -= badcost;
             this.gameDetails.setMoney(this.currentMoney);
             this.onGameScreen(e);
-           // lsc.enableTowerButtons();
             StoreGame.getGameDetails().setImage("bad");
-            //lsc.clickTower();
         }
     }
 }
