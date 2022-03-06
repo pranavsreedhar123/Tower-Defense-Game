@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
+import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import static org.testfx.api.FxAssert.verifyThat;
@@ -106,5 +107,23 @@ public class LandscapeTest extends ApplicationTest {
         clickOn("#begin");
         clickOn("OK");
         verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 1000"));
+    }
+
+    /**
+     * Checks if multiple towers can be added when one is purchased
+     */
+    @Test
+    public void testCheckPurchase() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#easy");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#shop");
+        clickOn("Buy $100!");
+        clickOn("#1,4");
+        verifyThat("#1,4", NodeMatchers.isNotNull());
     }
 }
