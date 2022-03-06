@@ -13,13 +13,16 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.game.ConfigurationController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="50.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <top>
         <VBox alignment="TOP_CENTER">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="50.0"/>
+            </padding>
             <Label fx:id="initText" wrapText="true" alignment="CENTER" textFill="black">
                 <font>
-                    <Font name="Arial Black" size="18"/>
+                    <Font name="Arial Black" size="30"/>
                 </font>
             </Label>
         </VBox>

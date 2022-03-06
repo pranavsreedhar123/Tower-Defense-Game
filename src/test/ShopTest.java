@@ -33,8 +33,8 @@ public class ShopTest extends ApplicationTest {
         clickOn("#begin");
         clickOn("OK");
         clickOn("#shop");
-        clickOn("Buy $100!");
-        verifyThat("#moneyText", LabeledMatchers.hasText("$400"));
+        clickOn("#bad");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$1900"));
     }
 
     /**
@@ -50,8 +50,8 @@ public class ShopTest extends ApplicationTest {
         clickOn("#begin");
         clickOn("OK");
         clickOn("#shop");
-        clickOn("Buy $250!");
-        verifyThat("#moneyText", LabeledMatchers.hasText("$250"));
+        clickOn("#normal");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$1750"));
     }
 
     /**
@@ -67,7 +67,58 @@ public class ShopTest extends ApplicationTest {
         clickOn("#begin");
         clickOn("OK");
         clickOn("#shop");
-        clickOn("Buy $500!");
+        clickOn("#elite");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$1500"));
+    }
+
+    /**
+     * Tests if the money text is reduced by 200 if a bad tower is purchased
+     */
+    @Test
+    public void testBadMediumTowerPriceUpdate() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#shop");
+        clickOn("#bad");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$800"));
+    }
+
+    /**
+     * Tests if the money text is reduced by 500 if a normal tower is purchased
+     */
+    @Test
+    public void testNormalMediumTowerPriceUpdate() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#shop");
+        clickOn("#normal");
+        verifyThat("#moneyText", LabeledMatchers.hasText("$500"));
+    }
+
+    /**
+     * Tests if the money text is reduced by 1000 if an elite tower is purchased
+     */
+    @Test
+    public void testEliteMediumTowerPriceUpdate() {
+        clickOn("#play");
+        Node input = lookup("#nameText").query();
+        clickOn(input);
+        write("Test");
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#shop");
+        clickOn("#elite");
         verifyThat("#moneyText", LabeledMatchers.hasText("$0"));
     }
 }
