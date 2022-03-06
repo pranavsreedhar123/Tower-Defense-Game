@@ -39,9 +39,18 @@ public class ShopController {
     private ImageView normalImage;
     @FXML
     private ImageView eliteImage;
+    @FXML
+    private Button bad;
+    @FXML
+    private Button normal;
+    @FXML
+    private Button elite;
 
     private GameDetails gameDetails;
     private int currentMoney;
+    private int elitecost = 500;
+    private int normalcost = 250;
+    private int badcost = 100;
 
     @FXML
     private Label shopMoney;
@@ -52,7 +61,7 @@ public class ShopController {
         this.shopText.setText("Welcome to the Shop!");
         gameDetails = StoreGame.getGameDetails();
         this.currentMoney = gameDetails.getMoney();
-        this.shopMoney.setText("MONEY: " + this.currentMoney);
+        this.shopMoney.setText("MONEY: $" + this.currentMoney);
 
         try {
             URL url = TowerDefenseApplication.class.getResource("assets/images/Quit.png");
@@ -103,6 +112,19 @@ public class ShopController {
         eliteImage.setFitHeight(200);
         eliteImage.setFitWidth(200);
         eliteImage.setPreserveRatio(true);
+
+        if (gameDetails.getLevel().equals("MEDIUM")) {
+            elitecost *= 2;
+            normalcost *= 2;
+            badcost *= 2;
+        } else if (gameDetails.getLevel().equals("HARD")) {
+            elitecost *= 3;
+            normalcost *= 3;
+            badcost *= 3;
+        }
+        bad.setText("Buy $" + badcost + "!");
+        normal.setText("Buy $" + normalcost + "!");
+        elite.setText("Buy $" + elitecost + "!");
     }
 
     @FXML
@@ -119,7 +141,7 @@ public class ShopController {
 
     @FXML
     protected void purchaseElite(ActionEvent e) throws java.io.IOException {
-        int elitecost = 500;
+
         if (this.currentMoney < elitecost) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
             alert.showAndWait();
@@ -133,7 +155,7 @@ public class ShopController {
 
     @FXML
     protected void purchaseNormal(ActionEvent e) throws java.io.IOException {
-        int normalcost = 250;
+
         if (this.currentMoney < normalcost) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
             alert.showAndWait();
@@ -147,7 +169,8 @@ public class ShopController {
 
     @FXML
     protected void purchaseBad(ActionEvent e) throws java.io.IOException {
-        int badcost = 100;
+
+
         if (this.currentMoney < badcost) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
             alert.showAndWait();

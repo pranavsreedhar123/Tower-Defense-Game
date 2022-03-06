@@ -60,19 +60,19 @@ public class ConfigurationController {
     @FXML
     protected void onEasy(ActionEvent e) {
         level = "EASY";
-        money = 500;
+        money = 2000;
         health = 3000;
     }
     @FXML
     protected void onMedium(ActionEvent e) {
         level = "MEDIUM";
-        money = 250;
+        money = 1000;
         health = 2000;
     }
     @FXML
     protected void onHard(ActionEvent e) {
         level = "HARD";
-        money = 100;
+        money = 800;
         health = 1000;
     }
     @FXML

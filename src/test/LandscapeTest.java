@@ -21,7 +21,7 @@ public class LandscapeTest extends ApplicationTest {
         towerDefenseApplication.start(stage);
     }
     /**
-     * Tests if the level is easy, then the money is 500 dollars
+     * Tests if the level is easy, then the money is 2000 dollars
      */
     @Test
     public void testEasyMoney() {
@@ -32,7 +32,7 @@ public class LandscapeTest extends ApplicationTest {
         clickOn("#easy");
         clickOn("#begin");
         clickOn("OK");
-        verifyThat("#moneyText", LabeledMatchers.hasText("$500"));
+        verifyThat("#moneyText", LabeledMatchers.hasText("$2000"));
     }
 
     /**
@@ -51,7 +51,7 @@ public class LandscapeTest extends ApplicationTest {
     }
 
     /**
-     * Tests if the level is medium, then the money is 250 dollars
+     * Tests if the level is medium, then the money is 1000 dollars
      */
     @Test
     public void testMediumMoney() {
@@ -62,7 +62,7 @@ public class LandscapeTest extends ApplicationTest {
         clickOn("#medium");
         clickOn("#begin");
         clickOn("OK");
-        verifyThat("#moneyText", LabeledMatchers.hasText("$250"));
+        verifyThat("#moneyText", LabeledMatchers.hasText("$1000"));
     }
 
     /**
@@ -80,7 +80,7 @@ public class LandscapeTest extends ApplicationTest {
         verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 2000"));
     }
     /**
-     * Tests if the level is hard, then the money is 100 dollars
+     * Tests if the level is hard, then the money is 800 dollars
      */
     @Test
     public void testHardMoney() {
@@ -91,7 +91,7 @@ public class LandscapeTest extends ApplicationTest {
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
-        verifyThat("#moneyText", LabeledMatchers.hasText("$100"));
+        verifyThat("#moneyText", LabeledMatchers.hasText("$800"));
     }
 
     /**

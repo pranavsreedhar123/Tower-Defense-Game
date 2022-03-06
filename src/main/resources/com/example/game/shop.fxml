@@ -33,7 +33,7 @@
             <HBox>
                 <VBox alignment="CENTER">
                     <ImageView fx:id="badImage" />
-                    <Button text="Buy $100!" onAction="#purchaseBad" prefWidth="200"/>
+                    <Button text="Buy $100!" onAction="#purchaseBad" prefWidth="200" fx:id="bad"/>
                     <padding>
                         <Insets top="20.0" right="50.0"/>
                     </padding>
@@ -45,7 +45,7 @@
                     <padding>
                         <Insets top="20.0"  right="50.0"/>
                     </padding>
-                    <Button text="Buy $250!" onAction="#purchaseNormal" prefWidth="200"/>
+                    <Button text="Buy $250!" onAction="#purchaseNormal" prefWidth="200" fx:id="normal"/>
                 </VBox>
             </HBox>
             <HBox>
@@ -54,7 +54,7 @@
                     <padding>
                         <Insets top="20.0" right="50.0"/>
                     </padding>
-                    <Button text="Buy $500!" onAction="#purchaseElite" prefWidth="200"/>
+                    <Button text="Buy $500!" onAction="#purchaseElite" prefWidth="200" fx:id="elite"/>
                 </VBox>
             </HBox>
         </HBox>
