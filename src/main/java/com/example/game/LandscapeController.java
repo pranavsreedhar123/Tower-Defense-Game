@@ -1,8 +1,10 @@
 package com.example.game;
 
+import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,7 +12,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.net.URL;
 
 
@@ -27,16 +33,21 @@ public class LandscapeController {
     @FXML
     private Button shop;
     @FXML
+    private Button start;
+    @FXML
     private Button[] backgroundButtonArray;
+    @FXML
+    private ImageView enemy;
+    @FXML
+    private VBox enemyBox;
+
     private Button[] temp = new Button[108];
     @FXML
     private GridPane map;
+    private Circle circle;
 
     private GameDetails gameDetails;
     private Image quitImg;
-
-
-
 
     @FXML
     private void initialize() {
@@ -44,10 +55,13 @@ public class LandscapeController {
         String level = StoreGame.getGameDetails().getLevel();
         backgroundButtonArray = StoreGame.getGameDetails().getBackgroundButton();
         if (gameDetails != null) {
+
+
             this.moneyText.setText("$" + gameDetails.getMoney());
             //this.moneyText.toFront();
             this.healthText.setText("/ " + gameDetails.getHealth());
             this.dynamicHealthText.setText(" " + gameDetails.getHealth());
+            this.start.setText("Start Game!");
             this.shop.requestFocus();
             this.shop.setText("Open Shop!");
             try {
@@ -84,6 +98,11 @@ public class LandscapeController {
                         quitImgView.setImage(quitImg);
                         quit.setStyle("-fx-background-color: #ff0000");
                         quit.toFront();
+                        continue;
+                    } else if ((i == 0) && (j == 10)) {
+                        start.setPrefSize(100, 100);
+                        map.setRowIndex(start, 0);
+                        map.setColumnIndex(start, 10);
                         continue;
                     } else if ((i == 0) && (j == 11)) {
                         // structure.setAlignment(moneyText, Pos.TOP_RIGHT);
@@ -178,6 +197,45 @@ public class LandscapeController {
     }
 
     @FXML
+    protected void onPlay(ActionEvent e) throws Exception {
+        URL enemyURL = TowerDefenseApplication.class.getResource("assets/images/enemy.png");
+        Image enemyImage = new Image(String.valueOf(enemyURL));
+        enemy.setImage(enemyImage);
+        enemy.toFront();
+        enemyBox.setPrefSize(80, 80);
+        enemyBox.toFront();
+        enemy.setFitHeight(80);
+        enemy.setFitWidth(80);
+        enemyBox.setPadding(new Insets(120, 0, 0, 0));
+        PathTransition transition = new PathTransition();
+        Polyline path = new Polyline();
+        path.getPoints().addAll(0.0, 30.0,
+                150.0, 30.0,
+                150.0, 230.0,
+                350.0, 230.0,
+                350.0, 530.0,
+                1050.0, 530.0,
+                1050.0, 230.0,
+                825.0, 230.0);
+        transition.setNode(enemy);
+        transition.setPath(path);
+        if (StoreGame.getGameDetails().getLevel().equals("EASY")) {
+            transition.setDuration(Duration.seconds(20));
+        } else if (StoreGame.getGameDetails().getLevel().equals("MEDIUM")) {
+            transition.setDuration(Duration.seconds(15));
+        } else if (StoreGame.getGameDetails().getLevel().equals("HARD")) {
+            transition.setDuration(Duration.seconds(10));
+        }
+        transition.setCycleCount(1);
+        transition.play();
+        //map.toFront();
+        //PauseTransition pauseTransition = new PauseTransition(Duration.seconds(10));
+        //pauseTransition.setOnFinished(event -> checkLocation());
+
+
+    }
+
+    @FXML
     protected void onShop(ActionEvent e) throws java.io.IOException {
         FXMLLoader configPaneLoader = new FXMLLoader(
                 TowerDefenseApplication.class.getResource("shop.fxml"));
@@ -254,6 +312,7 @@ public class LandscapeController {
             backgroundButtonArray[12 * row + col] = backgroundButton;
             StoreGame.getGameDetails().setBackgroundButton(backgroundButtonArray);
         }
+
         //quit.requestFocus();
         //towerImgView.setImage(towerImg);
         System.out.println(row);
@@ -274,5 +333,6 @@ public class LandscapeController {
             }
         }
     }
+
 
 }
