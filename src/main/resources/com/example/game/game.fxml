@@ -9,6 +9,7 @@
            fx:controller="com.example.game.LandscapeController">
     <VBox fx:id="enemyBox">
     <ImageView fx:id="enemy" />
+        <ImageView fx:id="enemy2" />
     </VBox>
 <GridPane fx:id="map" xmlns:fx="http://javafx.com/fxml"
           prefHeight="480" prefWidth="750">

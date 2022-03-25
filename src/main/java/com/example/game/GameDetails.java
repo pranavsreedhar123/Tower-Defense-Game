@@ -9,6 +9,9 @@ public class GameDetails {
     private String image;
     private int money;
     private int health;
+    private final int easyHealth = 3000;
+    private final int mediumHealth = 2000;
+    private final int hardHealth = 1000;
     private Button[] backgroundButton = new Button[108];
     private GridPane map;
 
@@ -40,7 +43,17 @@ public class GameDetails {
         this.map = map;
     }
     public int getMoney() {
+
         return money;
+    }
+    public int getEasyHealth() {
+        return easyHealth;
+    }
+    public int getMediumHealth() {
+        return mediumHealth;
+    }
+    public int getHardHealth() {
+        return hardHealth;
     }
     public int getHealth() {
         return health;
