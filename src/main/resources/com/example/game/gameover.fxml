@@ -32,7 +32,7 @@
                 <padding>
                     <Insets top="100.0" left="10.0"/>
                 </padding>
-                <Button text="Quit" onAction="#onQuitButtonClick"/>
+                <Button fx:id="quit" text="Quit" onAction="#onQuitButtonClick"/>
             </HBox>
         </HBox>
     </VBox>

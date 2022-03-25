@@ -44,8 +44,6 @@ public class LandscapeController {
     @FXML
     private ImageView enemy;
     @FXML
-    private ImageView enemy2;
-    @FXML
     private VBox enemyBox;
 
     private Button[] temp = new Button[108];
@@ -95,11 +93,8 @@ public class LandscapeController {
         enemy.setFitWidth(50);
         enemy.setFitHeight(50);
 
-        URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemy2.png");
+        URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemy.png");
         Image enemyImage2 = new Image(String.valueOf(enemyURL2));
-        enemy2.setImage(enemyImage2);
-        enemy2.setFitWidth(50);
-        enemy2.setFitHeight(50);
         gameDetails = StoreGame.getGameDetails();
         String level = StoreGame.getGameDetails().getLevel();
         backgroundButtonArray = StoreGame.getGameDetails().getBackgroundButton();
@@ -516,7 +511,7 @@ public class LandscapeController {
                             }
                         }
                     });
-                    Thread.sleep(1500);
+                    Thread.sleep(time);
                 }
                 System.out.println("end of loop");
 
