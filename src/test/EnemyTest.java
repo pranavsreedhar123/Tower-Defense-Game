@@ -1,6 +1,7 @@
 import com.example.game.TowerDefenseApplication;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -23,14 +24,21 @@ public class EnemyTest extends ApplicationTest {
     }
 
     /**
-     * Tests if the start button is disabled on click of start
+     * Traverses to the initial config screen before assigning difficulty for testing.
      */
-    @Test
-    public void testCombatStartButton() throws InterruptedException {
+    @Before
+    public void traverseToInitialConfigScreen() {
         clickOn("#play");
         Node input = lookup("#nameText").query();
         clickOn(input);
         write("Test");
+    }
+
+    /**
+     * Tests if the start button is disabled on click of start
+     */
+    @Test
+    public void testCombatStartButton() throws InterruptedException {
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
@@ -43,10 +51,7 @@ public class EnemyTest extends ApplicationTest {
      */
     @Test
     public void testCombatShopButton() throws InterruptedException {
-        clickOn("#play");
-        Node input = lookup("#nameText").query();
-        clickOn(input);
-        write("Test");
+
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
@@ -59,10 +64,7 @@ public class EnemyTest extends ApplicationTest {
      */
     @Test
     public void testMonumentUnaffected() throws InterruptedException {
-        clickOn("#play");
-        Node input = lookup("#nameText").query();
-        clickOn(input);
-        write("Test");
+
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
@@ -73,14 +75,41 @@ public class EnemyTest extends ApplicationTest {
     }
 
     /**
-     * Tests if the enemy reaches the monument in the expected time.
+     * Tests if the enemy reaches the monument in the expected time in Easy Mode.
      */
     @Test
-    public void testEnemyReaches() throws InterruptedException {
-        clickOn("#play");
-        Node input = lookup("#nameText").query();
-        clickOn(input);
-        write("Test");
+    public void testEnemyReachesEasy() throws InterruptedException {
+
+        clickOn("#easy");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#start");
+        Thread.sleep(29500);
+        verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 2900"));
+
+    }
+
+    /**
+     * Tests if the enemy reaches the monument in the expected time in Medium Mode.
+     */
+    @Test
+    public void testEnemyReachesMedium() throws InterruptedException {
+
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#start");
+        Thread.sleep(19500);
+        verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" 1900"));
+
+    }
+
+    /**
+     * Tests if the enemy reaches the monument in the expected time in Hard Mode.
+     */
+    @Test
+    public void testEnemyReachesHard() throws InterruptedException {
+
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
@@ -91,35 +120,39 @@ public class EnemyTest extends ApplicationTest {
     }
 
     /**
-     * Tests if the enemy appropriately reduces the monument health to 0.
+     * Tests the Game Over screen - EASY MODE.
      */
     @Test
-    public void testEnemyReachesAndDegrades() throws InterruptedException {
-        clickOn("#play");
-        Node input = lookup("#nameText").query();
-        clickOn(input);
-        write("Test");
-        clickOn("#hard");
+    public void testEasyGameOver() throws InterruptedException {
+
+        clickOn("#easy");
         clickOn("#begin");
         clickOn("OK");
         clickOn("#start");
-        Thread.sleep(10000);
-
-        for (int i = 1; i <= 10; i++) {
-            verifyThat("#dynamicHealthText", LabeledMatchers.hasText(" " + (10 - i) * 1000));
-            Thread.sleep(500);
-        }
+        Thread.sleep(75000);
+        verifyThat("#gameOverText", LabeledMatchers.hasText("Game Over!"));
     }
 
     /**
-     * Tests the Game Over screen.
+     * Tests the Game Over screen - MEDIUM MODE.
      */
     @Test
-    public void testGameOver() throws InterruptedException {
-        clickOn("#play");
-        Node input = lookup("#nameText").query();
-        clickOn(input);
-        write("Test");
+    public void testMediumGameOver() throws InterruptedException {
+
+        clickOn("#medium");
+        clickOn("#begin");
+        clickOn("OK");
+        clickOn("#start");
+        Thread.sleep(40000);
+        verifyThat("#gameOverText", LabeledMatchers.hasText("Game Over!"));
+    }
+
+    /**
+     * Tests the Game Over screen - HARD MODE.
+     */
+    @Test
+    public void testHardGameOver() throws InterruptedException {
+
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
@@ -132,10 +165,7 @@ public class EnemyTest extends ApplicationTest {
      */
     @Test
     public void testPlayAgain() throws InterruptedException {
-        clickOn("#play");
-        Node input = lookup("#nameText").query();
-        clickOn(input);
-        write("Test");
+
         clickOn("#hard");
         clickOn("#begin");
         clickOn("OK");
