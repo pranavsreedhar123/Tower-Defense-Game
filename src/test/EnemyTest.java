@@ -10,6 +10,9 @@ import org.testfx.matcher.control.LabeledMatchers;
 
 import static org.testfx.api.FxAssert.verifyThat;
 
+/**
+ * See "M4 Test Write-up.pdf" for further details
+ */
 public class EnemyTest extends ApplicationTest {
     /**
      * Starts up TowerDefenseApplication.
