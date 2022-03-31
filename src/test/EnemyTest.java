@@ -47,7 +47,7 @@ public class EnemyTest extends ApplicationTest {
     }
 
     /**
-     * Tests if the shop button is disabled on click of start
+     * Tests if the shop button is disabled when start is clicked
      */
     @Test
     public void testCombatShopButton() throws InterruptedException {
