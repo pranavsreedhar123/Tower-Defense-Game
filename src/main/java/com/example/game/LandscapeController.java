@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class LandscapeController {
@@ -41,10 +42,10 @@ public class LandscapeController {
     private Button start;
     @FXML
     private Button[] backgroundButtonArray;
-    @FXML
-    private ImageView enemy;
-    @FXML
-    private VBox enemyBox;
+    private ArrayList<ImageView> enemyImages;
+    private ArrayList<Integer> enemyPos;
+    private ArrayList<Integer> enemyHealth;
+    private ArrayList<Integer> enemyPrevPos;
 
     private Button[] temp = new Button[108];
     @FXML
@@ -56,6 +57,14 @@ public class LandscapeController {
 
 
     private static int time = 500;
+    private int interval = 0;
+    private int count = 0;
+    private int health = 0;
+    private int currentSent = 1;
+    private Image enemyImageEasy;
+    private Image enemyImageMed;
+    private Image enemyImageHard;
+    private int deadEnemies;
     // METHOD 2
     //    private static boolean f1 = false;
     //    private static boolean f2 = false;
@@ -88,13 +97,18 @@ public class LandscapeController {
     @FXML
     private void initialize() {
         URL enemyURL = TowerDefenseApplication.class.getResource("assets/images/enemy.png");
-        Image enemyImage = new Image(String.valueOf(enemyURL));
-        enemy.setImage(enemyImage);
-        enemy.setFitWidth(50);
-        enemy.setFitHeight(50);
+        enemyImageEasy = new Image(String.valueOf(enemyURL));
+        enemyPos = new ArrayList<Integer>();
+        enemyHealth = new ArrayList<Integer>();
+        enemyImages = new ArrayList<ImageView>();
+        enemyPrevPos = new ArrayList<Integer>();
 
-        URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemy.png");
-        Image enemyImage2 = new Image(String.valueOf(enemyURL2));
+        URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemyMed.png");
+        enemyImageMed = new Image(String.valueOf(enemyURL2));
+
+        URL enemyURL3 = TowerDefenseApplication.class.getResource("assets/images/enemyHard.png");
+        enemyImageHard = new Image(String.valueOf(enemyURL3));
+
         gameDetails = StoreGame.getGameDetails();
         String level = StoreGame.getGameDetails().getLevel();
         backgroundButtonArray = StoreGame.getGameDetails().getBackgroundButton();
@@ -174,26 +188,26 @@ public class LandscapeController {
                         continue;
                     } else if ((i == 1) && (j == 0 || j == 1)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 2 || i == 3) && (j == 1)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 3) && (j == 2 || j == 3)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 4 || i == 5 || i == 6) && (j == 3)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 6) && (j == 4 || j == 5 || j == 6 || j == 7
                             || j == 8 || j == 9 || j == 10)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 3 || i == 4 || i == 5) && (j == 10)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 3) && (j == 8 || j == 9)) {
                         backgroundButton.setStyle(
-                                "-fx-background-color: #0000ff; -fx-background-radius: 0");
+                                "-fx-background-color: #FFFF00; -fx-background-radius: 0");
                     } else if ((i == 2 || i == 4) && (j == 7 || j == 6)) {
                         backgroundButton.setStyle(
                                 "-fx-background-color: #ff0000; -fx-background-radius: 0");
@@ -298,18 +312,46 @@ public class LandscapeController {
         //METHOD 3
         start.setDisable(true);
         shop.setDisable(true);
+        ImageView addEnemyImages;
         if (StoreGame.getGameDetails().getLevel().equals("EASY")) {
             time = 1500;
+            interval = 2000;
+            count = 5;
+            health = 200;
+
         } else if (StoreGame.getGameDetails().getLevel().equals("MEDIUM")) {
             time = 1000;
+            interval = 2500;
+            count = 10;
+            health = 400;
         } else if (StoreGame.getGameDetails().getLevel().equals("HARD")) {
             time = 500;
+            interval = 1000;
+            count = 20;
+            health = 600;
         }
-        backgroundButtonArray[12].setGraphic(enemy);
+        for (int i = 0; i < count; i++) {
+            addEnemyImages = new ImageView();
+            if (StoreGame.getGameDetails().getLevel().equals("EASY")) {
+                addEnemyImages.setImage(enemyImageEasy);
+            } else if (StoreGame.getGameDetails().getLevel().equals("MEDIUM")) {
+                addEnemyImages.setImage(enemyImageMed);
+            } else {
+                addEnemyImages.setImage(enemyImageHard);
+            }
+            addEnemyImages.setFitWidth(50);
+            addEnemyImages.setFitHeight(50);
+            enemyImages.add(addEnemyImages);
+        }
+        backgroundButtonArray[12].setGraphic(enemyImages.get(0));
         Thread.sleep(250);
-        pos = 12;
-        startCombat1();
 
+        for (int i = 0; i < count; i++) {
+            enemyPos.add(12);
+            enemyPrevPos.add(12);
+            enemyHealth.add(health);
+        }
+        startCombat1();
 
     }
 
@@ -326,14 +368,18 @@ public class LandscapeController {
     }
 
     @FXML
-    protected void onGameOver() throws java.io.IOException {
-        FXMLLoader gameOVerLoader = new FXMLLoader(
-                TowerDefenseApplication.class.getResource("gameover.fxml"));
-        Parent gameOverPane = gameOVerLoader.load();
-        Scene gameOverScene = new Scene(gameOverPane, 1200, 900);
-        gameOverScene.getRoot().setStyle("-fx-font-family: 'Arial'");
-        Stage stage = (Stage) map.getScene().getWindow();
-        stage.setScene(gameOverScene);
+    protected void onGameOver() {
+        try {
+            FXMLLoader gameOVerLoader = new FXMLLoader(
+                    TowerDefenseApplication.class.getResource("gameover.fxml"));
+            Parent gameOverPane = gameOVerLoader.load();
+            Scene gameOverScene = new Scene(gameOverPane, 1200, 900);
+            gameOverScene.getRoot().setStyle("-fx-font-family: 'Arial'");
+            Stage stage = (Stage) map.getScene().getWindow();
+            stage.setScene(gameOverScene);
+        } catch (Exception e) {
+
+        }
     }
 
     protected void clickTower() throws java.io.IOException {
@@ -356,71 +402,131 @@ public class LandscapeController {
             }
         }
     }
-    private void startCombat1() {
+    private void startCombat1() throws InterruptedException {
         Task task = new Task<Integer>() {
             @Override
             public Integer call() throws Exception {
-                while (backgroundButtonArray[44].getGraphic() == null) {
+                while (deadEnemies < count) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            backgroundButtonArray[pos].setGraphic(enemy);
+                            for (int i = 0; i < currentSent; i++) {
+                                backgroundButtonArray[enemyPrevPos.get(i)].setText("");
+                                if (enemyHealth.get(i) == 0) {
+                                    gameDetails.setMoney(gameDetails.getMoney() + 100);
+                                    deadEnemies++;
+                                }
+                            }
+                            for (int i = 0; i < currentSent; i++) {
+                                if (enemyHealth.get(i) != 0) {
+                                    backgroundButtonArray[enemyPos.get(i)].setGraphic(enemyImages.get(i));
+                                    backgroundButtonArray[enemyPos.get(i)].setText("" + enemyHealth.get(i));
+                                }
+                            }
+                            if (gameDetails.getHealth() < 0) {
+                                gameDetails.setHealth(0);
+                            }
+                            dynamicHealthText.setText("" + gameDetails.getHealth());
+                            if (gameDetails.getHealth() == 0) {
+                                try {
+                                    Thread.sleep(250);
+                                    enemyPos = new ArrayList<Integer>();
+                                    enemyPrevPos = new ArrayList<Integer>();
+                                    enemyHealth = new ArrayList<Integer>();
+                                    for (int i = 0; i < count; i++) {
+                                        enemyPos.add(12);
+                                        enemyPrevPos.add(12);
+                                        enemyHealth.add(health);
+                                    }
+                                    currentSent = 1;
+                                    deadEnemies = 0;
+                                    onGameOver();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     });
-                    if (pos == 12) {
-                        pos = 13;
-                    } else if (pos == 13) {
-                        pos = 25;
-                    } else if (pos == 25) {
-                        pos = 37;
-                    } else if (pos == 37) {
-                        pos = 38;
-                    } else if (pos == 38) {
-                        pos = 39;
-                    } else if (pos == 39) {
-                        pos = 51;
-                    } else if (pos == 51) {
-                        pos = 63;
-                    } else if (pos == 63) {
-                        pos = 75;
-                    } else if (pos == 75) {
-                        pos = 76;
-                    } else if (pos == 76) {
-                        pos = 77;
-                    } else if (pos == 77) {
-                        pos = 78;
-                    } else if (pos == 78) {
-                        pos = 79;
-                    } else if (pos == 79) {
-                        pos = 80;
-                    } else if (pos == 80) {
-                        pos = 81;
-                    } else if (pos == 81) {
-                        pos = 82;
-                    } else if (pos == 82) {
-                        pos = 70;
-                    } else if (pos == 70) {
-                        pos = 58;
-                    } else if (pos == 58) {
-                        pos = 46;
-                    } else if (pos == 46) {
-                        pos = 45;
-                    } else if (pos == 45) {
-                        pos = 44;
-                        towerAttack();
-                    } else {
 
-                        break;
+                    for (int i = 0; i < currentSent; i++) {
+                        if (enemyHealth.get(i) != 0) {
+                            if (enemyPos.get(i) == 12) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 13);
+                            } else if (enemyPos.get(i) == 13) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 25);
+                            } else if (enemyPos.get(i) == 25) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 37);
+                            } else if (enemyPos.get(i) == 37) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 38);
+                            } else if (enemyPos.get(i) == 38) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 39);
+                            } else if (enemyPos.get(i) == 39) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 51);
+                            } else if (enemyPos.get(i) == 51) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 63);
+                            } else if (enemyPos.get(i) == 63) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 75);
+                            } else if (enemyPos.get(i) == 75) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 76);
+                            } else if (enemyPos.get(i) == 76) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 77);
+                            } else if (enemyPos.get(i) == 77) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 78);
+                            } else if (enemyPos.get(i) == 78) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 79);
+                            } else if (enemyPos.get(i) == 79) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 80);
+                            } else if (enemyPos.get(i) == 80) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 81);
+                            } else if (enemyPos.get(i) == 81) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 82);
+                            } else if (enemyPos.get(i) == 82) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 70);
+                            } else if (enemyPos.get(i) == 70) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 58);
+                            } else if (enemyPos.get(i) == 58) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 46);
+                            } else if (enemyPos.get(i) == 46) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 45);
+                            } else if (enemyPos.get(i) == 45) {
+                                enemyPrevPos.set(i, enemyPos.get(i));
+                                enemyPos.set(i, 44);
+                            } else if (enemyPos.get(i) == 44) {
+                                StoreGame.getGameDetails().setHealth(gameDetails.getHealth() - 100);
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     Thread.sleep(time);
+                    if (currentSent < enemyPos.size() && enemyPos.get(currentSent - 1) == 37) {
+                        currentSent++;
+                    }
                 }
-                System.out.println(pos);
-                System.out.println("end of loop");
-                return pos;
+                return 0;
             }
         };
         Thread combat = new Thread(task);
-        combat.setDaemon(true);
+        combat.setDaemon(false);
         combat.start();
     }
 
@@ -500,12 +606,12 @@ public class LandscapeController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            StoreGame.getGameDetails().setHealth(gameDetails.getHealth() - 100);
+                            StoreGame.getGameDetails().setHealth(gameDetails.getHealth() - 50);
                             dynamicHealthText.setText(" " + gameDetails.getHealth());
                             if (gameDetails.getHealth() <= 0) {
                                 try {
                                     onGameOver();
-                                } catch (IOException e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
