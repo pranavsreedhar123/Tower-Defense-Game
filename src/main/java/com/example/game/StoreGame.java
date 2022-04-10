@@ -1,7 +1,7 @@
 package com.example.game;
 
 public class StoreGame {
-    private static GameDetails gameDetails;
+    private static GameDetails gameDetails = null;
 
     public static GameDetails getGameDetails() {
         return gameDetails;

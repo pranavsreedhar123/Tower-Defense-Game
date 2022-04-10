@@ -48,7 +48,6 @@ public class LandscapeController {
     private ArrayList<Integer> enemyPos;
     private ArrayList<Integer> enemyHealth;
     private ArrayList<Integer> enemyPrevPos;
-    private HashMap<Integer, Integer> pathPositionMappedToDamage;
     private HashSet<Integer> pathLocations;
 
     private Button[] temp = new Button[108];
@@ -106,7 +105,6 @@ public class LandscapeController {
         enemyHealth = new ArrayList<Integer>();
         enemyImages = new ArrayList<ImageView>();
         enemyPrevPos = new ArrayList<Integer>();
-        pathPositionMappedToDamage = new HashMap<>();
 
         // 12, 13, 25, 37, 38, 39, 51, 63, 75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44
         pathLocations = new HashSet<>();
@@ -131,11 +129,6 @@ public class LandscapeController {
         pathLocations.add(46);
         pathLocations.add(45);
         pathLocations.add(44);
-
-        for (int i : pathLocations) {
-            pathPositionMappedToDamage.put(i, 0);
-        }
-
 
 
         URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemyMed.png");
@@ -405,6 +398,7 @@ public class LandscapeController {
     @FXML
     protected void onGameOver() {
         try {
+            StoreGame.setGameDetails(gameDetails);
             FXMLLoader gameOVerLoader = new FXMLLoader(
                     TowerDefenseApplication.class.getResource("gameover.fxml"));
             Parent gameOverPane = gameOVerLoader.load();
@@ -431,7 +425,6 @@ public class LandscapeController {
                             placeTower(button, "bad");
                         }
 
-
                     });
                 }
             }
@@ -441,8 +434,7 @@ public class LandscapeController {
         Task task = new Task<Integer>() {
             @Override
             public Integer call() throws Exception {
-                while (deadEnemies < count) {
-                    System.out.println(deadEnemies);
+                while (!checkDone()) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -458,9 +450,13 @@ public class LandscapeController {
                                     backgroundButtonArray[enemyPos.get(i)].setGraphic(enemyImages.get(i));
                                     int currHealth = enemyHealth.get(i);
                                     int currPos = enemyPos.get(i);
-                                    int damage = pathPositionMappedToDamage.get(currPos);
+                                    int damage = gameDetails.getDamages().get(currPos);
                                     enemyHealth.set(i, currHealth - damage);
+                                    gameDetails.setExtraMoney((damage / 10));
                                     backgroundButtonArray[enemyPos.get(i)].setText("" + enemyHealth.get(i));
+                                } else {
+                                    backgroundButtonArray[enemyPos.get(i)].setGraphic(null);
+                                    backgroundButtonArray[enemyPos.get(i)].setText("");
                                 }
                             }
                             if (gameDetails.getHealth() < 0) {
@@ -659,7 +655,7 @@ public class LandscapeController {
                     });
                     Thread.sleep(time);
                 }
-                System.out.println("end of loop");
+
 
                 return pos;
             }
@@ -669,9 +665,16 @@ public class LandscapeController {
         health.setDaemon(true);
         health.start();
     }
+    private boolean checkDone() {
+        for (int i = 0; i < enemyHealth.size(); i++) {
+            if (enemyHealth.get(i) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
     protected void placeTower(Button backgroundButton, String tower)  {
         String[] id = backgroundButton.getId().split(",");
-        System.out.println(backgroundButton.getStyle());
         int row = Integer.parseInt(id[0]);
         int col = Integer.parseInt(id[1]);
         if (tower.equals("bad")) {
@@ -719,8 +722,6 @@ public class LandscapeController {
 
         //quit.requestFocus();
         //towerImgView.setImage(towerImg);
-        System.out.println(row);
-        System.out.println(col);
         map.setRowIndex(backgroundButton, row);
         map.setColumnIndex(backgroundButton, col);
         StoreGame.getGameDetails().setImage("");
@@ -738,19 +739,21 @@ public class LandscapeController {
         int col = getColFromButton(backgroundButton);
 
         HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+        HashMap<Integer, Integer> updatedPathDamage = new HashMap<Integer, Integer>();
 
-        for (int position: positionsInRange) {
-            if (positionOnPath(position)) {
-                int currVal = pathPositionMappedToDamage.get(position);
+
+        for (int position : pathLocations) {
+            if (positionsInRange.contains(position) && positionOnPath(position)) {
                 int damage = getDamageForTower(tower);
-                pathPositionMappedToDamage.replace(position, currVal + damage);
+                updatedPathDamage.put(position, damage);
             }
         }
+        gameDetails.updateTowerDamages(updatedPathDamage);
 
     }
 
     private int getDamageForTower(String tower) {
-        return 100;
+        return 50;
 //        switch (gameDetails.getLevel()) {
 //            case "EASY":
 //                break;
@@ -762,7 +765,7 @@ public class LandscapeController {
     }
 
     private boolean positionOnPath(int pos) {
-        return pathPositionMappedToDamage.containsKey(pos);
+        return pathLocations.contains(pos);
     }
 
     private HashSet<Integer> posInRange(int row, int col, String tower) {
