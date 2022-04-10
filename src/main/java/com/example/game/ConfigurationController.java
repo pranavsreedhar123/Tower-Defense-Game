@@ -85,7 +85,12 @@ public class ConfigurationController {
                     "Name: " + name.getText() + "\nLevel: " + level
             );
             alert.showAndWait();
-            gameDetails = new GameDetails(this.money, this.health, this.level, this.name.getText());
+            GameDetails old = StoreGame.getGameDetails();
+            if (old != null) {
+                gameDetails = new GameDetails(this.money + old.getExtraMoney(), this.health, this.level, this.name.getText());
+            } else {
+                gameDetails = new GameDetails(this.money, this.health, this.level, this.name.getText());
+            }
             StoreGame.setGameDetails(gameDetails);
             gameScreen(e);
         }
