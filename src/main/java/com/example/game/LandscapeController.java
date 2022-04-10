@@ -22,8 +22,10 @@ import javafx.stage.Stage;
 //import javafx.util.Duration;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.*;
 
 
 public class LandscapeController {
@@ -46,6 +48,8 @@ public class LandscapeController {
     private ArrayList<Integer> enemyPos;
     private ArrayList<Integer> enemyHealth;
     private ArrayList<Integer> enemyPrevPos;
+    private HashMap<Integer, Integer> pathPositionMappedToDamage;
+    private HashSet<Integer> pathLocations;
 
     private Button[] temp = new Button[108];
     @FXML
@@ -102,6 +106,37 @@ public class LandscapeController {
         enemyHealth = new ArrayList<Integer>();
         enemyImages = new ArrayList<ImageView>();
         enemyPrevPos = new ArrayList<Integer>();
+        pathPositionMappedToDamage = new HashMap<>();
+
+        // 12, 13, 25, 37, 38, 39, 51, 63, 75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44
+        pathLocations = new HashSet<>();
+        pathLocations.add(12);
+        pathLocations.add(13);
+        pathLocations.add(25);
+        pathLocations.add(37);
+        pathLocations.add(38);
+        pathLocations.add(39);
+        pathLocations.add(51);
+        pathLocations.add(63);
+        pathLocations.add(75);
+        pathLocations.add(76);
+        pathLocations.add(77);
+        pathLocations.add(78);
+        pathLocations.add(79);
+        pathLocations.add(80);
+        pathLocations.add(81);
+        pathLocations.add(82);
+        pathLocations.add(70);
+        pathLocations.add(58);
+        pathLocations.add(46);
+        pathLocations.add(45);
+        pathLocations.add(44);
+
+        for (int i : pathLocations) {
+            pathPositionMappedToDamage.put(i, 0);
+        }
+
+
 
         URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemyMed.png");
         enemyImageMed = new Image(String.valueOf(enemyURL2));
@@ -407,6 +442,7 @@ public class LandscapeController {
             @Override
             public Integer call() throws Exception {
                 while (deadEnemies < count) {
+                    System.out.println(deadEnemies);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -418,8 +454,12 @@ public class LandscapeController {
                                 }
                             }
                             for (int i = 0; i < currentSent; i++) {
-                                if (enemyHealth.get(i) != 0) {
+                                if (enemyHealth.get(i) > 0) {
                                     backgroundButtonArray[enemyPos.get(i)].setGraphic(enemyImages.get(i));
+                                    int currHealth = enemyHealth.get(i);
+                                    int currPos = enemyPos.get(i);
+                                    int damage = pathPositionMappedToDamage.get(currPos);
+                                    enemyHealth.set(i, currHealth - damage);
                                     backgroundButtonArray[enemyPos.get(i)].setText("" + enemyHealth.get(i));
                                 }
                             }
@@ -688,6 +728,74 @@ public class LandscapeController {
         //backgroundButton.setStyle("-fx-background-color: #ff0000");
 
         //quit.toFront();
+
+        updatePathPositionMappedToDamage(backgroundButton, tower);
+    }
+
+    private void updatePathPositionMappedToDamage(Button backgroundButton, String tower) {
+
+        int row = getRowFromButton(backgroundButton);
+        int col = getColFromButton(backgroundButton);
+
+        HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+
+        for (int position: positionsInRange) {
+            if (positionOnPath(position)) {
+                int currVal = pathPositionMappedToDamage.get(position);
+                int damage = getDamageForTower(tower);
+                pathPositionMappedToDamage.replace(position, currVal + damage);
+            }
+        }
+
+    }
+
+    private int getDamageForTower(String tower) {
+        return 100;
+//        switch (gameDetails.getLevel()) {
+//            case "EASY":
+//                break;
+//            case "MEDIUM":
+//                break;
+//            case "HARD":
+//                break;
+//        }
+    }
+
+    private boolean positionOnPath(int pos) {
+        return pathPositionMappedToDamage.containsKey(pos);
+    }
+
+    private HashSet<Integer> posInRange(int row, int col, String tower) {
+        // needs to be changed in the future to have different positions in range for different types of tower
+        // currently just returns a list of adjacent blocks
+        HashSet<Integer> inRange = new HashSet<>();
+
+        inRange.add(calcPosFromRowCol(row-1, col));
+        inRange.add(calcPosFromRowCol(row-1, col-1));
+        inRange.add(calcPosFromRowCol(row-1, col+1));
+        inRange.add(calcPosFromRowCol(row, col-1));
+        inRange.add(calcPosFromRowCol(row, col+1));
+        inRange.add(calcPosFromRowCol(row+1, col));
+        inRange.add(calcPosFromRowCol(row+1, col-1));
+        inRange.add(calcPosFromRowCol(row+1, col+1));
+
+        return inRange;
+    }
+
+    private int calcPosFromRowCol(int row, int col) {
+        return row * 12 + col;
+    }
+
+    private int getPosFromButton(Button b) {
+        return calcPosFromRowCol(getRowFromButton(b), getColFromButton(b));
+    }
+
+    private int getRowFromButton(Button b) {
+        return Integer.parseInt(b.getId().split(",")[0]);
+    }
+
+    private int getColFromButton(Button b) {
+        return Integer.parseInt(b.getId().split(",")[1]);
     }
 
     protected void disableTowerButtons() {
