@@ -87,9 +87,11 @@ public class ConfigurationController {
             alert.showAndWait();
             GameDetails old = StoreGame.getGameDetails();
             if (old != null) {
-                gameDetails = new GameDetails(this.money + old.getExtraMoney(), this.health, this.level, this.name.getText());
+                gameDetails = new GameDetails(this.money + old.getExtraMoney(),
+                        this.health, this.level, this.name.getText());
             } else {
-                gameDetails = new GameDetails(this.money, this.health, this.level, this.name.getText());
+                gameDetails = new GameDetails(this.money, this.health,
+                        this.level, this.name.getText());
             }
             StoreGame.setGameDetails(gameDetails);
             gameScreen(e);

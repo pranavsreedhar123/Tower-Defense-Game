@@ -20,13 +20,11 @@ import javafx.scene.shape.Circle;
 //import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 //import javafx.util.Duration;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
+//import java.io.IOException;
+//import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.*;
-
 
 public class LandscapeController {
 
@@ -105,38 +103,12 @@ public class LandscapeController {
         enemyHealth = new ArrayList<Integer>();
         enemyImages = new ArrayList<ImageView>();
         enemyPrevPos = new ArrayList<Integer>();
-
-        // 12, 13, 25, 37, 38, 39, 51, 63, 75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44
-        pathLocations = new HashSet<>();
-        pathLocations.add(12);
-        pathLocations.add(13);
-        pathLocations.add(25);
-        pathLocations.add(37);
-        pathLocations.add(38);
-        pathLocations.add(39);
-        pathLocations.add(51);
-        pathLocations.add(63);
-        pathLocations.add(75);
-        pathLocations.add(76);
-        pathLocations.add(77);
-        pathLocations.add(78);
-        pathLocations.add(79);
-        pathLocations.add(80);
-        pathLocations.add(81);
-        pathLocations.add(82);
-        pathLocations.add(70);
-        pathLocations.add(58);
-        pathLocations.add(46);
-        pathLocations.add(45);
-        pathLocations.add(44);
-
-
+        pathLocations = new HashSet<>(Arrays.asList(12, 13, 25, 37, 38, 39, 51, 63,
+                75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44));
         URL enemyURL2 = TowerDefenseApplication.class.getResource("assets/images/enemyMed.png");
         enemyImageMed = new Image(String.valueOf(enemyURL2));
-
         URL enemyURL3 = TowerDefenseApplication.class.getResource("assets/images/enemyHard.png");
         enemyImageHard = new Image(String.valueOf(enemyURL3));
-
         gameDetails = StoreGame.getGameDetails();
         String level = StoreGame.getGameDetails().getLevel();
         backgroundButtonArray = StoreGame.getGameDetails().getBackgroundButton();
@@ -447,14 +419,17 @@ public class LandscapeController {
                             }
                             for (int i = 0; i < currentSent; i++) {
                                 if (enemyHealth.get(i) > 0) {
-                                    backgroundButtonArray[enemyPos.get(i)].setGraphic(enemyImages.get(i));
+                                    backgroundButtonArray[enemyPos.get(i)].setGraphic(
+                                            enemyImages.get(i));
                                     int currHealth = enemyHealth.get(i);
                                     int currPos = enemyPos.get(i);
                                     int damage = gameDetails.getDamages().get(currPos);
                                     enemyHealth.set(i, currHealth - damage);
                                     gameDetails.setExtraMoney((damage / 10));
-                                    backgroundButtonArray[enemyPos.get(i)].setText("" + enemyHealth.get(i));
-                                } else {
+                                    backgroundButtonArray[enemyPos.get(i)].setText(
+                                            "" + enemyHealth.get(i));
+                                }
+                                if (enemyHealth.get(i) <= 0) {
                                     backgroundButtonArray[enemyPos.get(i)].setGraphic(null);
                                     backgroundButtonArray[enemyPos.get(i)].setText("");
                                 }
@@ -753,15 +728,16 @@ public class LandscapeController {
     }
 
     private int getDamageForTower(String tower) {
-        return 50;
-//        switch (gameDetails.getLevel()) {
-//            case "EASY":
-//                break;
-//            case "MEDIUM":
-//                break;
-//            case "HARD":
-//                break;
-//        }
+        switch (tower) {
+        case "bad":
+            return gameDetails.getBadTowerDamage();
+        case "normal":
+            return gameDetails.getNormalTowerDamage();
+        case "elite":
+            return gameDetails.getEliteTowerDamage();
+        default:
+            return 20;
+        }
     }
 
     private boolean positionOnPath(int pos) {
@@ -769,18 +745,16 @@ public class LandscapeController {
     }
 
     private HashSet<Integer> posInRange(int row, int col, String tower) {
-        // needs to be changed in the future to have different positions in range for different types of tower
-        // currently just returns a list of adjacent blocks
         HashSet<Integer> inRange = new HashSet<>();
 
-        inRange.add(calcPosFromRowCol(row-1, col));
-        inRange.add(calcPosFromRowCol(row-1, col-1));
-        inRange.add(calcPosFromRowCol(row-1, col+1));
-        inRange.add(calcPosFromRowCol(row, col-1));
-        inRange.add(calcPosFromRowCol(row, col+1));
-        inRange.add(calcPosFromRowCol(row+1, col));
-        inRange.add(calcPosFromRowCol(row+1, col-1));
-        inRange.add(calcPosFromRowCol(row+1, col+1));
+        inRange.add(calcPosFromRowCol(row - 1, col));
+        inRange.add(calcPosFromRowCol(row - 1, col - 1));
+        inRange.add(calcPosFromRowCol(row - 1, col + 1));
+        inRange.add(calcPosFromRowCol(row, col - 1));
+        inRange.add(calcPosFromRowCol(row, col + 1));
+        inRange.add(calcPosFromRowCol(row + 1, col));
+        inRange.add(calcPosFromRowCol(row + 1, col - 1));
+        inRange.add(calcPosFromRowCol(row + 1, col + 1));
 
         return inRange;
     }

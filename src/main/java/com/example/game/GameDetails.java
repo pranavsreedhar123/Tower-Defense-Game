@@ -22,6 +22,10 @@ public class GameDetails {
     private HashSet<Integer> pathLocations;
     private int extraMoney = 0;
 
+    private final int badTowerDamage = 40;
+    private final int normalTowerDamage = 60;
+    private final int eliteTowerDamage = 80;
+
     public GameDetails(int money, int health, String level, String name) {
         this.money = money;
         this.level = level;
@@ -109,7 +113,8 @@ public class GameDetails {
     }
     public void updateTowerDamages(Map<Integer, Integer> update) {
         for (int position : update.keySet()) {
-            pathPositionMappedToDamage.replace(position, pathPositionMappedToDamage.get(position) + update.get(position));
+            pathPositionMappedToDamage.replace(position,
+                    pathPositionMappedToDamage.get(position) + update.get(position));
         }
     }
     public Map<Integer, Integer> getDamages() {
@@ -120,5 +125,17 @@ public class GameDetails {
     }
     public int getExtraMoney() {
         return extraMoney;
+    }
+
+    public int getBadTowerDamage() {
+        return badTowerDamage;
+    }
+
+    public int getNormalTowerDamage() {
+        return normalTowerDamage;
+    }
+
+    public int getEliteTowerDamage() {
+        return eliteTowerDamage;
     }
 }
