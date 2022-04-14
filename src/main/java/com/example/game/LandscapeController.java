@@ -28,6 +28,10 @@ import java.util.*;
 
 public class LandscapeController {
 
+    public static final int BADTOWERDAMAGE = 40;
+    public static final int NORMALTOWERDAMAGE = 60;
+    public static final int ELITETOWERDAMAGE = 80;
+
     @FXML
     private Label moneyText;
     @FXML
@@ -66,6 +70,8 @@ public class LandscapeController {
     private Image enemyImageMed;
     private Image enemyImageHard;
     private int deadEnemies;
+    private HashMap<Integer, Integer> updatedPathDamage;
+    private HashMap<Integer, Integer> testingPathDamage;
     // METHOD 2
     //    private static boolean f1 = false;
     //    private static boolean f2 = false;
@@ -94,9 +100,8 @@ public class LandscapeController {
     //    private static boolean f25 = false;
     private int pos;
 
-
     @FXML
-    private void initialize() {
+    public void initialize() {
         URL enemyURL = TowerDefenseApplication.class.getResource("assets/images/enemy.png");
         enemyImageEasy = new Image(String.valueOf(enemyURL));
         enemyPos = new ArrayList<Integer>();
@@ -247,7 +252,6 @@ public class LandscapeController {
     }
 
 
-
     @FXML
     protected void onHomeScreen(ActionEvent e) throws java.io.IOException {
         StoreGame.setGameDetails(null);
@@ -384,7 +388,7 @@ public class LandscapeController {
     }
 
     protected void clickTower() throws java.io.IOException {
-        for (Button button: StoreGame.getGameDetails().getBackgroundButton()) {
+        for (Button button : StoreGame.getGameDetails().getBackgroundButton()) {
             if (button != null) {
                 if (button.getStyle().equals(
                         "-fx-background-color: #00ff00; -fx-background-radius: 0")) {
@@ -402,6 +406,7 @@ public class LandscapeController {
             }
         }
     }
+
     private void startCombat1() throws InterruptedException {
         Task task = new Task<Integer>() {
             @Override
@@ -640,6 +645,7 @@ public class LandscapeController {
         health.setDaemon(true);
         health.start();
     }
+
     private boolean checkDone() {
         for (int i = 0; i < enemyHealth.size(); i++) {
             if (enemyHealth.get(i) > 0) {
@@ -648,7 +654,8 @@ public class LandscapeController {
         }
         return true;
     }
-    protected void placeTower(Button backgroundButton, String tower)  {
+
+    public void placeTower(Button backgroundButton, String tower) {
         String[] id = backgroundButton.getId().split(",");
         int row = Integer.parseInt(id[0]);
         int col = Integer.parseInt(id[1]);
@@ -714,8 +721,7 @@ public class LandscapeController {
         int col = getColFromButton(backgroundButton);
 
         HashSet<Integer> positionsInRange = posInRange(row, col, tower);
-        HashMap<Integer, Integer> updatedPathDamage = new HashMap<Integer, Integer>();
-
+        updatedPathDamage = new HashMap<Integer, Integer>();
 
         for (int position : pathLocations) {
             if (positionsInRange.contains(position) && positionOnPath(position)) {
@@ -730,11 +736,11 @@ public class LandscapeController {
     private int getDamageForTower(String tower) {
         switch (tower) {
         case "bad":
-            return gameDetails.getBadTowerDamage();
+            return BADTOWERDAMAGE;
         case "normal":
-            return gameDetails.getNormalTowerDamage();
+            return NORMALTOWERDAMAGE;
         case "elite":
-            return gameDetails.getEliteTowerDamage();
+            return ELITETOWERDAMAGE;
         default:
             return 20;
         }
@@ -776,12 +782,42 @@ public class LandscapeController {
     }
 
     protected void disableTowerButtons() {
-        for (Button b: backgroundButtonArray) {
+        for (Button b : backgroundButtonArray) {
             if (b != null) {
                 b.setDisable(true);
             }
         }
     }
+
+    public Button[] getBackgroundButtonArray() {
+        return backgroundButtonArray;
+    }
+
+    public HashMap<Integer, Integer> getUpdatedPathDamage() {
+        return updatedPathDamage;
+    }
+
+    // Testing purposes below
+
+    public void initializeJUnits() {
+        pathLocations = new HashSet<>(Arrays.asList(12, 13, 25, 37, 38, 39, 51, 63,
+                75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44));
+        testingPathDamage = new HashMap<Integer, Integer>();
+    }
+
+    public HashMap<Integer, Integer> testPlaceTower(int row, int col, String tower) {
+        HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+        for (int position : pathLocations) {
+            if (positionsInRange.contains(position) && positionOnPath(position)) {
+                int newDamage = getDamageForTower(tower);
+                Integer currDamage = testingPathDamage.get(position);
+                currDamage = (currDamage == null) ? 0 : currDamage;
+                testingPathDamage.put(position, newDamage + currDamage);
+            }
+        }
+        return testingPathDamage;
+    }
+
     //METHOD 2
     //    private static class SleepService extends Service<String>{
     //
@@ -971,6 +1007,5 @@ public class LandscapeController {
     //            };
     //        }
     //    }
-
 
 }
