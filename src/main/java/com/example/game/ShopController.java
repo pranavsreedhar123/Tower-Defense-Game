@@ -122,6 +122,7 @@ public class ShopController {
             normalcost *= 3;
             badcost *= 3;
         }
+
         bad.setText("$" + badcost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
         normal.setText("$" + normalcost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
         elite.setText("$" + elitecost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
