@@ -22,9 +22,6 @@ public class GameDetails {
     private HashSet<Integer> pathLocations;
     private int extraMoney = 0;
 
-    private final int badTowerDamage = 40;
-    private final int normalTowerDamage = 60;
-    private final int eliteTowerDamage = 80;
 
     public GameDetails(int money, int health, String level, String name) {
         this.money = money;
@@ -127,15 +124,4 @@ public class GameDetails {
         return extraMoney;
     }
 
-    public int getBadTowerDamage() {
-        return badTowerDamage;
-    }
-
-    public int getNormalTowerDamage() {
-        return normalTowerDamage;
-    }
-
-    public int getEliteTowerDamage() {
-        return eliteTowerDamage;
-    }
 }
