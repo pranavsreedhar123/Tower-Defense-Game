@@ -122,11 +122,9 @@ public class ShopController {
             normalcost *= 3;
             badcost *= 3;
         }
-        bad.setText("$" + badcost + " (does " + LandscapeController.BADTOWERDAMAGE + " damage)");
-        normal.setText("$" + normalcost + " (does " + LandscapeController.NORMALTOWERDAMAGE
-                + " damage)");
-        elite.setText("$" + elitecost + " (does "
-                + LandscapeController.ELITETOWERDAMAGE + " damage)");
+        bad.setText("$" + badcost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
+        normal.setText("$" + normalcost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
+        elite.setText("$" + elitecost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
     }
 
     @FXML
