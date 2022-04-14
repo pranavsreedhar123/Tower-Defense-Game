@@ -21,6 +21,9 @@ public class M5Test {
         landscapeController.initializeJUnits();
     }
 
+    /**
+     * This test checks enemy damage with the placement of a single bad tower
+     */
     @Test
     public void testPlacementOfSingleTowerBad() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(2, 0, "bad");
@@ -31,6 +34,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a single normal tower
+     */
     @Test
     public void testPlacementOfSingleTowerNormal() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(2, 0, "normal");
@@ -41,6 +47,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a single elite tower
+     */
     @Test
     public void testPlacementOfSingleTowerElite() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(2, 0, "elite");
@@ -51,6 +60,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a multiple bad towers
+     */
     @Test
     public void testPlacementOfMultipleTowersBad() {
         landscapeController.testPlaceTower(2, 0, "bad");
@@ -65,6 +77,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a multiple normal towers
+     */
     @Test
     public void testPlacementOfMultipleTowersNormal() {
         landscapeController.testPlaceTower(2, 0, "normal");
@@ -79,6 +94,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a multiple elite towers
+     */
     @Test
     public void testPlacementOfMultipleTowersElite() {
         landscapeController.testPlaceTower(2, 0, "elite");
@@ -93,6 +111,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a multiple mixed towers
+     */
     @Test
     public void testPlacementOfMultipleTowersMixed() {
         landscapeController.testPlaceTower(2, 0, "bad");
@@ -107,6 +128,9 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a single bad tower which is out of range
+     */
     @Test
     public void testPlacementOfSingleTowerOutOfRangeBad() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(0, 7, "bad");
@@ -115,6 +139,10 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a single normal tower
+     * which is out of range
+     */
     @Test
     public void testPlacementOfSingleTowerOutOfRangeNormal() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(0, 7, "normal");
@@ -123,6 +151,10 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of a single elite tower
+     * which is out of range
+     */
     @Test
     public void testPlacementOfSingleTowerOutOfRangeElite() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(0, 7, "elite");
@@ -131,6 +163,10 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of multiple towers,
+     * one of which is out of range and bad, and one of which is in range and bad
+     */
     @Test
     public void testPlacementOfMultipleTowersOneOutOfRangeOneInRangeBad() {
         landscapeController.testPlaceTower(0, 7, "bad");
@@ -141,6 +177,10 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of multiple towers,
+     * one of which is out of range and normal, and one of which is in range and normal
+     */
     @Test
     public void testPlacementOfMultipleTowersOneOutOfRangeOneInRangeNormal() {
         landscapeController.testPlaceTower(0, 7, "normal");
@@ -151,6 +191,10 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the placement of multiple towers,
+     * one of which is out of range and elite, and one of which is in range and elite
+     */
     @Test
     public void testPlacementOfMultipleTowersOneOutOfRangeOneInRangeElite() {
         landscapeController.testPlaceTower(0, 7, "elite");
@@ -161,6 +205,10 @@ public class M5Test {
         );
     }
 
+    /**
+     * This test checks enemy damage with the invalid placement of a tower
+     * (i.e) enemies should not be damage as no tower is placed on the map
+     */
     @Test
     public void testPlacementOfZeroTowers() {
         HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(-1, -1, "bad");
