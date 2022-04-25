@@ -72,6 +72,12 @@ public class LandscapeController {
     private int deadEnemies;
     private HashMap<Integer, Integer> updatedPathDamage;
     private HashMap<Integer, Integer> testingPathDamage;
+    private int bossHealth;
+    private Image bossImageRaw;
+    private ImageView bossImage;
+    private int bossPos;
+    private int bossPrev;
+    private boolean bossSent = false;
     // METHOD 2
     //    private static boolean f1 = false;
     //    private static boolean f2 = false;
@@ -114,6 +120,8 @@ public class LandscapeController {
         enemyImageMed = new Image(String.valueOf(enemyURL2));
         URL enemyURL3 = TowerDefenseApplication.class.getResource("assets/images/enemyHard.png");
         enemyImageHard = new Image(String.valueOf(enemyURL3));
+        URL enemyURL4 = TowerDefenseApplication.class.getResource("assets/images/boss.png");
+        bossImageRaw = new Image(String.valueOf(enemyURL4));
         gameDetails = StoreGame.getGameDetails();
         String level = StoreGame.getGameDetails().getLevel();
         backgroundButtonArray = StoreGame.getGameDetails().getBackgroundButton();
@@ -322,17 +330,20 @@ public class LandscapeController {
             interval = 2000;
             count = 5;
             health = 200;
+            bossHealth = 800;
 
         } else if (StoreGame.getGameDetails().getLevel().equals("MEDIUM")) {
             time = 1000;
             interval = 2500;
             count = 10;
             health = 400;
+            bossHealth = 1600;
         } else if (StoreGame.getGameDetails().getLevel().equals("HARD")) {
             time = 500;
             interval = 1000;
             count = 20;
             health = 600;
+            bossHealth = 2400;
         }
         for (int i = 0; i < count; i++) {
             addEnemyImages = new ImageView();
@@ -355,6 +366,11 @@ public class LandscapeController {
             enemyPrevPos.add(12);
             enemyHealth.add(health);
         }
+        bossImage = new ImageView();
+        bossImage.setImage(bossImageRaw);
+        bossImage.setFitWidth(50);
+        bossImage.setFitHeight(50);
+        bossPos = 12;
         startCombat1();
 
     }
@@ -373,6 +389,22 @@ public class LandscapeController {
 
     @FXML
     protected void onGameOver() {
+        try {
+            StoreGame.setGameDetails(gameDetails);
+            FXMLLoader gameOVerLoader = new FXMLLoader(
+                    TowerDefenseApplication.class.getResource("gameover.fxml"));
+            Parent gameOverPane = gameOVerLoader.load();
+            Scene gameOverScene = new Scene(gameOverPane, 1200, 900);
+            gameOverScene.getRoot().setStyle("-fx-font-family: 'Arial'");
+            Stage stage = (Stage) map.getScene().getWindow();
+            stage.setScene(gameOverScene);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @FXML
+    protected void onWon() {
         try {
             StoreGame.setGameDetails(gameDetails);
             FXMLLoader gameOVerLoader = new FXMLLoader(
@@ -415,6 +447,15 @@ public class LandscapeController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            boolean allDead = true;
+                            for (int i = 0; i < enemyHealth.size(); i++) {
+                                if (enemyHealth.get(i) >= 0) {
+                                    allDead = false;
+                                }
+                            }
+                            bossSent = allDead;
+                            System.out.println(allDead);
+                            backgroundButtonArray[bossPrev].setText("");
                             for (int i = 0; i < currentSent; i++) {
                                 backgroundButtonArray[enemyPrevPos.get(i)].setText("");
                                 if (enemyHealth.get(i) == 0) {
@@ -439,6 +480,18 @@ public class LandscapeController {
                                     backgroundButtonArray[enemyPos.get(i)].setText("");
                                 }
                             }
+                            if (allDead && bossHealth > 0) {
+                                backgroundButtonArray[bossPos].setGraphic(bossImage);
+                                backgroundButtonArray[bossPos].setText("" + bossHealth);
+                                int damage = gameDetails.getDamages().get(bossPos);
+                                bossHealth -= damage;
+                            }
+                            if (allDead && bossHealth <= 0) {
+                                backgroundButtonArray[bossPos].setGraphic(null);
+                                backgroundButtonArray[bossPos].setText("");
+                                onWon();
+                            }
+                            System.out.println(bossHealth);
                             if (gameDetails.getHealth() < 0) {
                                 gameDetails.setHealth(0);
                             }
@@ -465,7 +518,7 @@ public class LandscapeController {
                     });
 
                     for (int i = 0; i < currentSent; i++) {
-                        if (enemyHealth.get(i) != 0) {
+                        if (enemyHealth.get(i) > 0) {
                             if (enemyPos.get(i) == 12) {
                                 enemyPrevPos.set(i, enemyPos.get(i));
                                 enemyPos.set(i, 13);
@@ -532,6 +585,50 @@ public class LandscapeController {
                                 break;
                             }
                         }
+                    }
+                    bossPrev = bossPos;
+                    if (bossPos == 12 && bossSent) {
+                        bossPos = 13;
+                    } else if (bossPos == 13 && bossSent) {
+                        bossPos = 25;
+                    } else if (bossPos == 25 && bossSent) {
+                        bossPos = 37;
+                    } else if (bossPos == 37 && bossSent) {
+                        bossPos = 38;
+                    } else if (bossPos == 38 && bossSent) {
+                        bossPos = 39;
+                    } else if (bossPos == 39 && bossSent) {
+                        bossPos = 51;
+                    } else if (bossPos == 51 && bossSent) {
+                        bossPos = 63;
+                    } else if (bossPos == 63 && bossSent) {
+                        bossPos = 75;
+                    } else if (bossPos == 75 && bossSent) {
+                        bossPos = 76;
+                    } else if (bossPos == 76 && bossSent) {
+                        bossPos = 77;
+                    } else if (bossPos == 77 && bossSent) {
+                        bossPos = 78;
+                    } else if (bossPos == 78 && bossSent) {
+                        bossPos = 79;
+                    } else if (bossPos == 79 && bossSent) {
+                        bossPos = 80;
+                    } else if (bossPos == 80 && bossSent) {
+                        bossPos = 81;
+                    } else if (bossPos == 81 && bossSent) {
+                        bossPos = 82;
+                    } else if (bossPos == 82 && bossSent) {
+                        bossPos = 70;
+                    } else if (bossPos == 70 && bossSent) {
+                        bossPos = 58;
+                    } else if (bossPos == 58 && bossSent) {
+                        bossPos = 46;
+                    } else if (bossPos == 46 && bossSent) {
+                        bossPos = 45;
+                    } else if (bossPos == 45 && bossSent) {
+                        bossPos = 44;
+                    } else if (bossPos == 44 && bossSent) {
+                        StoreGame.getGameDetails().setHealth(gameDetails.getHealth() - 250);
                     }
                     Thread.sleep(time);
                     if (currentSent < enemyPos.size() && enemyPos.get(currentSent - 1) == 37) {
@@ -647,6 +744,9 @@ public class LandscapeController {
     }
 
     private boolean checkDone() {
+        if (bossHealth > 0) {
+            return false;
+        }
         for (int i = 0; i < enemyHealth.size(); i++) {
             if (enemyHealth.get(i) > 0) {
                 return false;
