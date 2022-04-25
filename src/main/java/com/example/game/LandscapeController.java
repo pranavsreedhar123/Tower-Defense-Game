@@ -28,7 +28,7 @@ import java.util.*;
 
 public class LandscapeController {
 
-    public static final int BADTOWERDAMAGE = 40;
+    public static final int BADTOWERDAMAGE = 50;
     public static final int NORMALTOWERDAMAGE = 60;
     public static final int ELITETOWERDAMAGE = 80;
 
@@ -257,6 +257,7 @@ public class LandscapeController {
                 }
             }
         }
+
     }
 
 
@@ -323,25 +324,25 @@ public class LandscapeController {
 
         //METHOD 3
         start.setDisable(true);
-        shop.setDisable(true);
+        //shop.setDisable(true);
         ImageView addEnemyImages;
         if (StoreGame.getGameDetails().getLevel().equals("EASY")) {
             time = 1500;
-            interval = 2000;
+            interval = 2500;
             count = 5;
             health = 200;
             bossHealth = 800;
 
         } else if (StoreGame.getGameDetails().getLevel().equals("MEDIUM")) {
             time = 1000;
-            interval = 2500;
+            interval = 2000;
             count = 10;
             health = 400;
-            bossHealth = 1600;
+            bossHealth = 1000;
         } else if (StoreGame.getGameDetails().getLevel().equals("HARD")) {
             time = 500;
             interval = 1000;
-            count = 20;
+            count = 15;
             health = 600;
             bossHealth = 2400;
         }
@@ -408,7 +409,7 @@ public class LandscapeController {
         try {
             StoreGame.setGameDetails(gameDetails);
             FXMLLoader gameOVerLoader = new FXMLLoader(
-                    TowerDefenseApplication.class.getResource("gameover.fxml"));
+                    TowerDefenseApplication.class.getResource("win.fxml"));
             Parent gameOverPane = gameOVerLoader.load();
             Scene gameOverScene = new Scene(gameOverPane, 1200, 900);
             gameOverScene.getRoot().setStyle("-fx-font-family: 'Arial'");
@@ -449,7 +450,7 @@ public class LandscapeController {
                         public void run() {
                             boolean allDead = true;
                             for (int i = 0; i < enemyHealth.size(); i++) {
-                                if (enemyHealth.get(i) >= 0) {
+                                if (enemyHealth.get(i) > 0) {
                                     allDead = false;
                                 }
                             }

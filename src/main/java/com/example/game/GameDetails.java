@@ -23,6 +23,7 @@ public class GameDetails {
     private int extraMoney = 0;
 
 
+
     public GameDetails(int money, int health, String level, String name) {
         this.money = money;
         this.level = level;
@@ -123,5 +124,4 @@ public class GameDetails {
     public int getExtraMoney() {
         return extraMoney;
     }
-
 }
