@@ -21,6 +21,8 @@ public class GameDetails {
     private HashMap<Integer, Integer> pathPositionMappedToDamage;
     private HashSet<Integer> pathLocations;
     private int extraMoney = 0;
+    private int upgrade = 0;
+    private int deadenemies = 0;
 
 
 
@@ -60,6 +62,10 @@ public class GameDetails {
         }
 
     }
+
+    public void setUpgrade(int upgrade) {
+        this.upgrade = upgrade;
+    }
     public void setMoney(int money) {
         this.money = money;
     }
@@ -81,9 +87,18 @@ public class GameDetails {
     public void setMap(GridPane map) {
         this.map = map;
     }
+    public void setDeadEnemies(int deadenemies) {
+        this.deadenemies = deadenemies;
+    }
     public int getMoney() {
-
         return money;
+    }
+    public int getDeadEnemies() {
+        return deadenemies;
+    }
+
+    public int getUpgrade() {
+        return upgrade;
     }
     public int getEasyHealth() {
         return easyHealth;

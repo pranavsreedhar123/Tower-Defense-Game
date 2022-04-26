@@ -124,8 +124,8 @@ public class ShopController {
         }
 
         bad.setText("$" + badcost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
-        normal.setText("$" + normalcost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
-        elite.setText("$" + elitecost + " (" + LandscapeController.BADTOWERDAMAGE + " damage)");
+        normal.setText("$" + normalcost + " (" + LandscapeController.NORMALTOWERDAMAGE + " damage)");
+        elite.setText("$" + elitecost + " (" + LandscapeController.ELITETOWERDAMAGE + " damage)");
     }
 
     @FXML
@@ -182,4 +182,6 @@ public class ShopController {
             StoreGame.getGameDetails().setImage("bad");
         }
     }
+
+
 }

@@ -15,6 +15,15 @@ public class GameOverController {
     private Label gameOverText;
     @FXML
     private Label developersText;
+    @FXML
+    private Label enemiesKilledText;
+    @FXML
+    private Label damageDoneText;
+    @FXML
+    private Label moneyText;
+
+    private GameDetails gameDetails;
+
 
     @FXML
     protected void onPlayButtonClick(ActionEvent e) throws java.io.IOException {
@@ -36,7 +45,14 @@ public class GameOverController {
 
     @FXML
     public void initialize() {
+        gameDetails = StoreGame.getGameDetails();
+        String level = StoreGame.getGameDetails().getLevel();
+
+
+        this.enemiesKilledText.setText("Enemies Killed: " + gameDetails.getDeadEnemies());
         this.gameOverText.setText("Game Over!");
+        this.moneyText.setText("Money Left: " + gameDetails.getMoney());
+        this.damageDoneText.setText("Monument health left: " + gameDetails.getHealth());
         this.developersText.setText("Developed by: Big-O-micron");
     }
 }

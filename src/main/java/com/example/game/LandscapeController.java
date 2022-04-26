@@ -43,6 +43,8 @@ public class LandscapeController {
     @FXML
     private Button shop;
     @FXML
+    private Button upgrade;
+    @FXML
     private Button start;
     @FXML
     private Button[] backgroundButtonArray;
@@ -141,6 +143,9 @@ public class LandscapeController {
             this.start.setText("Start Game!");
             this.shop.requestFocus();
             this.shop.setText("Open Shop!");
+            this.upgrade.requestFocus();
+            this.upgrade.setText("Upgrade!");
+            this.upgrade.setDisable(true);
             try {
                 URL url = TowerDefenseApplication.class.getResource("assets/images/Quit.png");
                 quitImg = new Image(String.valueOf(url));
@@ -187,6 +192,13 @@ public class LandscapeController {
                         shop.setPrefSize(100, 100);
                         map.setRowIndex(shop, 0);
                         map.setColumnIndex(shop, 11);
+                        continue;
+                    } else if ((i == 0) && (j == 9)) {
+                        // structure.setAlignment(moneyText, Pos.TOP_RIGHT);
+                        //shop.setStyle("-fx-background-color: #00ff00");
+                        upgrade.setPrefSize(100, 100);
+                        map.setRowIndex(upgrade, 0);
+                        map.setColumnIndex(upgrade, 9);
                         continue;
                     } else if ((i == 1) && (j == 11)) {
                         // structure.setAlignment(moneyText, Pos.TOP_RIGHT);
@@ -240,14 +252,44 @@ public class LandscapeController {
                         } else {
                             backgroundButton.setGraphic(
                                     backgroundButtonArray[12 * i + j].getGraphic());
+
                         }
                         backgroundButton.setOnAction(e -> {
-                            if (StoreGame.getGameDetails().getImage().equals("normal")) {
-                                placeTower(backgroundButton, "normal");
-                            } else if (StoreGame.getGameDetails().getImage().equals("elite")) {
-                                placeTower(backgroundButton, "elite");
-                            } else if (StoreGame.getGameDetails().getImage().equals("bad")) {
-                                placeTower(backgroundButton, "bad");
+                            if (backgroundButton.getGraphic() == null) {
+                                if (StoreGame.getGameDetails().getImage().equals("normal")) {
+                                    placeTower(backgroundButton, "normal");
+                                } else if (StoreGame.getGameDetails().getImage().equals("elite")) {
+                                    placeTower(backgroundButton, "elite");
+                                } else if (StoreGame.getGameDetails().getImage().equals("bad")) {
+                                    placeTower(backgroundButton, "bad");
+                                }
+                            } else {
+                                String url = ((ImageView) backgroundButton.getGraphic()).getImage().getUrl();
+                                String[] temp = url.split("/");
+                                String temp2 = temp[temp.length - 1];
+                                String tower = temp2.substring(0, temp2.length() - 4);
+                                System.out.println(tower);
+                                if (gameDetails.getUpgrade() == 1) {
+                                    if (tower.equals("BadTower")) {
+                                        updatePathPositionMappedToDamage(backgroundButton, "bad");
+                                    } else if (tower.equals("NormalTower")) {
+                                        updatePathPositionMappedToDamage(backgroundButton, "normal");
+                                    } else if (tower.equals("EliteTower")) {
+                                        updatePathPositionMappedToDamage(backgroundButton, "elite");
+                                    }
+                                    String upgradeTowerLevel = "";
+
+                                    if (backgroundButton.getText().length() == 0) {
+                                        System.out.println("UPGRADE 1");
+                                        upgradeTowerLevel = "1";
+                                    } else {
+                                        System.out.println("UPGRADE: " + (Integer.parseInt(backgroundButton.getText().trim()) + 1));
+                                        upgradeTowerLevel = "" + (Integer.parseInt(backgroundButton.getText()) + 1);
+                                    }
+                                    backgroundButton.setText(upgradeTowerLevel);
+                                    gameDetails.setUpgrade(0);
+
+                                }
                             }
                         });
                     }
@@ -260,6 +302,20 @@ public class LandscapeController {
 
     }
 
+    @FXML
+    protected void upgradeTower(ActionEvent e) throws java.io.IOException {
+
+
+        if (gameDetails.getMoney() < 100) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Insufficient Funds!");
+            alert.showAndWait();
+        } else {
+            gameDetails.setMoney(gameDetails.getMoney() - 100);
+            this.gameDetails.setMoney(gameDetails.getMoney());
+            this.moneyText.setText("$" + gameDetails.getMoney());
+            StoreGame.getGameDetails().setUpgrade(1);
+        }
+    }
 
     @FXML
     protected void onHomeScreen(ActionEvent e) throws java.io.IOException {
@@ -324,7 +380,8 @@ public class LandscapeController {
 
         //METHOD 3
         start.setDisable(true);
-        //shop.setDisable(true);
+//        shop.setDisable(true);
+        upgrade.setDisable(false);
         ImageView addEnemyImages;
         if (StoreGame.getGameDetails().getLevel().equals("EASY")) {
             time = 1500;
@@ -449,19 +506,29 @@ public class LandscapeController {
                         @Override
                         public void run() {
                             boolean allDead = true;
+                            deadEnemies = 0;
                             for (int i = 0; i < enemyHealth.size(); i++) {
                                 if (enemyHealth.get(i) > 0) {
                                     allDead = false;
+                                } else {
+                                    deadEnemies++;
+
+                                    System.out.println(deadEnemies);
+                                    StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
+                                    System.out.println(deadEnemies);
+                                    StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
                                 }
                             }
                             bossSent = allDead;
-                            System.out.println(allDead);
+                            //System.out.println(allDead);
                             backgroundButtonArray[bossPrev].setText("");
                             for (int i = 0; i < currentSent; i++) {
                                 backgroundButtonArray[enemyPrevPos.get(i)].setText("");
                                 if (enemyHealth.get(i) == 0) {
-                                    gameDetails.setMoney(gameDetails.getMoney() + 100);
-                                    deadEnemies++;
+//                                    gameDetails.setMoney(gameDetails.getMoney() + 50);
+//                                    moneyText.setText("$" + gameDetails.getMoney());
+//                                    System.out.println(deadEnemies);
+//                                    StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
                                 }
                             }
                             for (int i = 0; i < currentSent; i++) {
@@ -482,6 +549,7 @@ public class LandscapeController {
                                 }
                             }
                             if (allDead && bossHealth > 0) {
+
                                 backgroundButtonArray[bossPos].setGraphic(bossImage);
                                 backgroundButtonArray[bossPos].setText("" + bossHealth);
                                 int damage = gameDetails.getDamages().get(bossPos);
@@ -492,7 +560,7 @@ public class LandscapeController {
                                 backgroundButtonArray[bossPos].setText("");
                                 onWon();
                             }
-                            System.out.println(bossHealth);
+                           // System.out.println(bossHealth);
                             if (gameDetails.getHealth() < 0) {
                                 gameDetails.setHealth(0);
                             }
@@ -509,7 +577,7 @@ public class LandscapeController {
                                         enemyHealth.add(health);
                                     }
                                     currentSent = 1;
-                                    deadEnemies = 0;
+                                    //deadEnemies = 0;
                                     onGameOver();
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -827,6 +895,11 @@ public class LandscapeController {
         for (int position : pathLocations) {
             if (positionsInRange.contains(position) && positionOnPath(position)) {
                 int damage = getDamageForTower(tower);
+                if (gameDetails.getUpgrade() == 1) {
+                    damage += 30;
+                    gameDetails.setUpgrade(1);
+                    System.out.println("Upgrade: " + gameDetails.getUpgrade() + "\nDamage: " + damage);
+                }
                 updatedPathDamage.put(position, damage);
             }
         }

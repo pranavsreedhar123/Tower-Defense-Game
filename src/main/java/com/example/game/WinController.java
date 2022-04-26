@@ -57,6 +57,7 @@ public class WinController {
         }
         this.winText.setText("YOU WIN!");
         this.damageDoneText.setText("Monument health left: " + gameDetails.getHealth());
+        gameDetails.setMoney(gameDetails.getMoney() + gameDetails.getDeadEnemies()*50);
         this.moneyText.setText("Money Left: " + gameDetails.getMoney());
         this.developersText.setText("Developed by: Big-O-micron");
     }

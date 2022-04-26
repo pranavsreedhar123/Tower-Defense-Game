@@ -36,6 +36,7 @@
         </font>
     </Label>
     <Button fx:id="shop" onAction="#onShop"/>
+    <Button fx:id="upgrade" onAction="#upgradeTower"/>
     <Button fx:id="start" onAction="#onPlay"/>
 
 
