@@ -268,7 +268,7 @@ public class LandscapeController {
                                 String[] temp = url.split("/");
                                 String temp2 = temp[temp.length - 1];
                                 String tower = temp2.substring(0, temp2.length() - 4);
-                                System.out.println(tower);
+                                //System.out.println(tower);
                                 if (gameDetails.getUpgrade() == 1) {
                                     if (tower.equals("BadTower")) {
                                         updatePathPositionMappedToDamage(backgroundButton, "bad");
@@ -280,10 +280,10 @@ public class LandscapeController {
                                     String upgradeTowerLevel = "";
 
                                     if (backgroundButton.getText().length() == 0) {
-                                        System.out.println("UPGRADE 1");
+                                        //System.out.println("UPGRADE 1");
                                         upgradeTowerLevel = "1";
                                     } else {
-                                        System.out.println("UPGRADE: " + (Integer.parseInt(backgroundButton.getText().trim()) + 1));
+                                        //System.out.println("UPGRADE: " + (Integer.parseInt(backgroundButton.getText().trim()) + 1));
                                         upgradeTowerLevel = "" + (Integer.parseInt(backgroundButton.getText()) + 1);
                                     }
                                     backgroundButton.setText(upgradeTowerLevel);
@@ -513,9 +513,9 @@ public class LandscapeController {
                                 } else {
                                     deadEnemies++;
 
-                                    System.out.println(deadEnemies);
+                                    //System.out.println(deadEnemies);
                                     StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
-                                    System.out.println(deadEnemies);
+                                    //System.out.println(deadEnemies);
                                     StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
                                 }
                             }
@@ -898,7 +898,7 @@ public class LandscapeController {
                 if (gameDetails.getUpgrade() == 1) {
                     damage += 30;
                     gameDetails.setUpgrade(1);
-                    System.out.println("Upgrade: " + gameDetails.getUpgrade() + "\nDamage: " + damage);
+                    //System.out.println("Upgrade: " + gameDetails.getUpgrade() + "\nDamage: " + damage);
                 }
                 updatedPathDamage.put(position, damage);
             }
