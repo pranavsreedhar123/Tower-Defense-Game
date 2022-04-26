@@ -973,7 +973,7 @@ public class LandscapeController {
 
     // Testing purposes below
 
-    public void initializeJUnits() {
+    public void initializeM5Tests() {
         pathLocations = new HashSet<>(Arrays.asList(12, 13, 25, 37, 38, 39, 51, 63,
                 75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44));
         testingPathDamage = new HashMap<Integer, Integer>();

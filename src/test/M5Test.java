@@ -18,7 +18,7 @@ public class M5Test {
         gameDetails = new GameDetails(1000, 2000, "MEDIUM", "JUnit Tests");
         game.setGameDetails(gameDetails);
         landscapeController = new LandscapeController();
-        landscapeController.initializeJUnits();
+        landscapeController.initializeM5Tests();
     }
 
     /**
