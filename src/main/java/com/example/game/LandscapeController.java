@@ -74,6 +74,7 @@ public class LandscapeController {
     private int deadEnemies;
     private HashMap<Integer, Integer> updatedPathDamage;
     private HashMap<Integer, Integer> testingPathDamage;
+    private int testUpgrade;
     private int bossHealth;
     private Image bossImageRaw;
     private ImageView bossImage;
@@ -889,7 +890,7 @@ public class LandscapeController {
         int row = getRowFromButton(backgroundButton);
         int col = getColFromButton(backgroundButton);
 
-        HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+        HashSet<Integer> positionsInRange = posInRange(row, col);
         updatedPathDamage = new HashMap<Integer, Integer>();
 
         for (int position : pathLocations) {
@@ -924,7 +925,7 @@ public class LandscapeController {
         return pathLocations.contains(pos);
     }
 
-    private HashSet<Integer> posInRange(int row, int col, String tower) {
+    private HashSet<Integer> posInRange(int row, int col) {
         HashSet<Integer> inRange = new HashSet<>();
 
         inRange.add(calcPosFromRowCol(row - 1, col));
@@ -980,7 +981,7 @@ public class LandscapeController {
     }
 
     public HashMap<Integer, Integer> testPlaceTower(int row, int col, String tower) {
-        HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+        HashSet<Integer> positionsInRange = posInRange(row, col);
         for (int position : pathLocations) {
             if (positionsInRange.contains(position) && positionOnPath(position)) {
                 int newDamage = getDamageForTower(tower);
@@ -990,6 +991,37 @@ public class LandscapeController {
             }
         }
         return testingPathDamage;
+    }
+
+    public void initializeM6Tests() {
+        pathLocations = new HashSet<>(Arrays.asList(12, 13, 25, 37, 38, 39, 51, 63,
+                75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44));
+        testingPathDamage = new HashMap<Integer, Integer>();
+        this.testUpgrade = 0;
+    }
+
+    public HashMap<Integer, Integer> testUpgradeTower(int row, int col) {
+        if (this.testUpgrade == 1) {
+            HashSet<Integer> positionsInRange = posInRange(row, col);
+            for (int position : pathLocations) {
+                if (positionsInRange.contains(position) && positionOnPath(position)) {
+                    int newDamage = 30;
+                    Integer currDamage = testingPathDamage.get(position);
+                    currDamage = (currDamage == null) ? 0 : currDamage;
+                    testingPathDamage.put(position, newDamage + currDamage);
+                }
+            }
+            this.testUpgrade = 0;
+        }
+        return testingPathDamage;
+    }
+
+    public void purchaseUpgrade() {
+        this.testUpgrade = 1;
+    }
+
+    public HashMap<Integer, Integer> getTestingPathDamage() {
+        return this.testingPathDamage;
     }
 
     //METHOD 2
