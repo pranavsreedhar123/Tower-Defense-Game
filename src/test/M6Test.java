@@ -26,7 +26,7 @@ public class M6Test {
      */
     @Test
     public void testPlaceAndUpgradeSingleTowerSuccessBad() {
-        landscapeController.testPlaceTower(4,2, "bad");
+        landscapeController.testPlaceTower(4, 2, "bad");
         landscapeController.purchaseUpgrade();
         landscapeController.testUpgradeTower(4, 2);
         pathDamage = landscapeController.getTestingPathDamage();
