@@ -70,7 +70,7 @@ public class ConfigurationController {
 
 
         if (name.getText().isBlank() || name.getText().isEmpty()) {
-            System.out.println("hi");
+            //System.out.println("hi");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please write a valid name");
             level = "";
             //alert.getDialogPane().setExpandableContent(new Label("Please write a valid name"));

@@ -10,15 +10,14 @@ public class M5Test {
     private StoreGame game;
     private LandscapeController landscapeController;
     private GameDetails gameDetails;
-    private WelcomeController welcomeController;
-
+    private HashMap<Integer, Integer> pathDamage;
     @Before
     public void setup() throws IOException {
         game = new StoreGame();
         gameDetails = new GameDetails(1000, 2000, "MEDIUM", "JUnit Tests");
         game.setGameDetails(gameDetails);
         landscapeController = new LandscapeController();
-        landscapeController.initializeJUnits();
+        landscapeController.initializeM5Tests();
     }
 
     /**
@@ -26,10 +25,11 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfSingleTowerBad() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(2, 0, "bad");
+        landscapeController.testPlaceTower(2, 0, "bad");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
-                pathDamage.get(12) == 40 && pathDamage.get(13) == 40
-                        && pathDamage.get(25) == 40 && pathDamage.get(37) == 40
+                pathDamage.get(12) == 50 && pathDamage.get(13) == 50
+                        && pathDamage.get(25) == 50 && pathDamage.get(37) == 50
                         && pathDamage.size() == 4
         );
     }
@@ -39,7 +39,8 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfSingleTowerNormal() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(2, 0, "normal");
+        landscapeController.testPlaceTower(2, 0, "normal");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.get(12) == 60 && pathDamage.get(13) == 60
                         && pathDamage.get(25) == 60 && pathDamage.get(37) == 60
@@ -52,7 +53,8 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfSingleTowerElite() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(2, 0, "elite");
+        landscapeController.testPlaceTower(2, 0, "elite");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.get(12) == 80 && pathDamage.get(13) == 80
                          && pathDamage.get(25) == 80 && pathDamage.get(37) == 80
@@ -67,12 +69,13 @@ public class M5Test {
     public void testPlacementOfMultipleTowersBad() {
         landscapeController.testPlaceTower(2, 0, "bad");
         landscapeController.testPlaceTower(2, 2, "bad");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(4, 2, "bad");
+        landscapeController.testPlaceTower(4, 2, "bad");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
-            pathDamage.get(51) == 40 && pathDamage.get(37) == 120
-            && pathDamage.get(38) == 80 && pathDamage.get(39) == 80
-            && pathDamage.get(25) == 80 && pathDamage.get(12) == 40
-            && pathDamage.get(13) == 80 && pathDamage.get(63) == 40
+            pathDamage.get(51) == 50 && pathDamage.get(37) == 150
+            && pathDamage.get(38) == 100 && pathDamage.get(39) == 100
+            && pathDamage.get(25) == 100 && pathDamage.get(12) == 50
+            && pathDamage.get(13) == 100 && pathDamage.get(63) == 50
             && pathDamage.size() == 8
         );
     }
@@ -84,7 +87,8 @@ public class M5Test {
     public void testPlacementOfMultipleTowersNormal() {
         landscapeController.testPlaceTower(2, 0, "normal");
         landscapeController.testPlaceTower(2, 2, "normal");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(4, 2, "normal");
+        landscapeController.testPlaceTower(4, 2, "normal");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.get(51) == 60 && pathDamage.get(37) == 180
                         && pathDamage.get(38) == 120 && pathDamage.get(39) == 120
@@ -101,7 +105,8 @@ public class M5Test {
     public void testPlacementOfMultipleTowersElite() {
         landscapeController.testPlaceTower(2, 0, "elite");
         landscapeController.testPlaceTower(2, 2, "elite");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(4, 2, "elite");
+        landscapeController.testPlaceTower(4, 2, "elite");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.get(51) == 80 && pathDamage.get(37) == 240
                         && pathDamage.get(38) == 160 && pathDamage.get(39) == 160
@@ -118,12 +123,13 @@ public class M5Test {
     public void testPlacementOfMultipleTowersMixed() {
         landscapeController.testPlaceTower(2, 0, "bad");
         landscapeController.testPlaceTower(2, 2, "normal");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(4, 2, "elite");
+        landscapeController.testPlaceTower(4, 2, "elite");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
-                pathDamage.get(51) == 80 && pathDamage.get(37) == 180
+                pathDamage.get(51) == 80 && pathDamage.get(37) == 190
                         && pathDamage.get(38) == 140 && pathDamage.get(39) == 140
-                        && pathDamage.get(25) == 100 && pathDamage.get(12) == 40
-                        && pathDamage.get(13) == 100 && pathDamage.get(63) == 80
+                        && pathDamage.get(25) == 110 && pathDamage.get(12) == 50
+                        && pathDamage.get(13) == 110 && pathDamage.get(63) == 80
                         && pathDamage.size() == 8
         );
     }
@@ -133,7 +139,8 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfSingleTowerOutOfRangeBad() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(0, 7, "bad");
+        landscapeController.testPlaceTower(0, 7, "bad");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                         pathDamage.size() == 0
         );
@@ -145,7 +152,8 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfSingleTowerOutOfRangeNormal() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(0, 7, "normal");
+        landscapeController.testPlaceTower(0, 7, "normal");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.size() == 0
         );
@@ -157,7 +165,8 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfSingleTowerOutOfRangeElite() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(0, 7, "elite");
+        landscapeController.testPlaceTower(0, 7, "elite");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.size() == 0
         );
@@ -170,10 +179,11 @@ public class M5Test {
     @Test
     public void testPlacementOfMultipleTowersOneOutOfRangeOneInRangeBad() {
         landscapeController.testPlaceTower(0, 7, "bad");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(7, 6, "bad");
+        landscapeController.testPlaceTower(7, 6, "bad");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
-            pathDamage.get(77) == 40 && pathDamage.get(78) == 40
-                    && pathDamage.get(79) == 40 && pathDamage.size() == 3
+            pathDamage.get(77) == 50 && pathDamage.get(78) == 50
+                    && pathDamage.get(79) == 50 && pathDamage.size() == 3
         );
     }
 
@@ -184,7 +194,8 @@ public class M5Test {
     @Test
     public void testPlacementOfMultipleTowersOneOutOfRangeOneInRangeNormal() {
         landscapeController.testPlaceTower(0, 7, "normal");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(7, 6, "normal");
+        landscapeController.testPlaceTower(7, 6, "normal");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.get(77) == 60 && pathDamage.get(78) == 60
                         && pathDamage.get(79) == 60 && pathDamage.size() == 3
@@ -198,7 +209,8 @@ public class M5Test {
     @Test
     public void testPlacementOfMultipleTowersOneOutOfRangeOneInRangeElite() {
         landscapeController.testPlaceTower(0, 7, "elite");
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(7, 6, "elite");
+        landscapeController.testPlaceTower(7, 6, "elite");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.get(77) == 80 && pathDamage.get(78) == 80
                         && pathDamage.get(79) == 80 && pathDamage.size() == 3
@@ -211,7 +223,8 @@ public class M5Test {
      */
     @Test
     public void testPlacementOfZeroTowers() {
-        HashMap<Integer, Integer> pathDamage = landscapeController.testPlaceTower(-1, -1, "bad");
+        landscapeController.testPlaceTower(-1, -1, "bad");
+        pathDamage = landscapeController.getTestingPathDamage();
         Assertions.assertTrue(
                 pathDamage.size() == 0
         );

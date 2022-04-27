@@ -74,6 +74,7 @@ public class LandscapeController {
     private int deadEnemies;
     private HashMap<Integer, Integer> updatedPathDamage;
     private HashMap<Integer, Integer> testingPathDamage;
+    private int testUpgrade;
     private int bossHealth;
     private Image bossImageRaw;
     private ImageView bossImage;
@@ -268,7 +269,7 @@ public class LandscapeController {
                                 String[] temp = url.split("/");
                                 String temp2 = temp[temp.length - 1];
                                 String tower = temp2.substring(0, temp2.length() - 4);
-                                System.out.println(tower);
+                                //System.out.println(tower);
                                 if (gameDetails.getUpgrade() == 1) {
                                     if (tower.equals("BadTower")) {
                                         updatePathPositionMappedToDamage(backgroundButton, "bad");
@@ -280,10 +281,10 @@ public class LandscapeController {
                                     String upgradeTowerLevel = "";
 
                                     if (backgroundButton.getText().length() == 0) {
-                                        System.out.println("UPGRADE 1");
+                                        //System.out.println("UPGRADE 1");
                                         upgradeTowerLevel = "1";
                                     } else {
-                                        System.out.println("UPGRADE: " + (Integer.parseInt(backgroundButton.getText().trim()) + 1));
+                                        //System.out.println("UPGRADE: " + (Integer.parseInt(backgroundButton.getText().trim()) + 1));
                                         upgradeTowerLevel = "" + (Integer.parseInt(backgroundButton.getText()) + 1);
                                     }
                                     backgroundButton.setText(upgradeTowerLevel);
@@ -513,9 +514,9 @@ public class LandscapeController {
                                 } else {
                                     deadEnemies++;
 
-                                    System.out.println(deadEnemies);
+                                    //System.out.println(deadEnemies);
                                     StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
-                                    System.out.println(deadEnemies);
+                                    //System.out.println(deadEnemies);
                                     StoreGame.getGameDetails().setDeadEnemies(deadEnemies);
                                 }
                             }
@@ -889,7 +890,7 @@ public class LandscapeController {
         int row = getRowFromButton(backgroundButton);
         int col = getColFromButton(backgroundButton);
 
-        HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+        HashSet<Integer> positionsInRange = posInRange(row, col);
         updatedPathDamage = new HashMap<Integer, Integer>();
 
         for (int position : pathLocations) {
@@ -898,7 +899,7 @@ public class LandscapeController {
                 if (gameDetails.getUpgrade() == 1) {
                     damage += 30;
                     gameDetails.setUpgrade(1);
-                    System.out.println("Upgrade: " + gameDetails.getUpgrade() + "\nDamage: " + damage);
+                    //System.out.println("Upgrade: " + gameDetails.getUpgrade() + "\nDamage: " + damage);
                 }
                 updatedPathDamage.put(position, damage);
             }
@@ -924,7 +925,7 @@ public class LandscapeController {
         return pathLocations.contains(pos);
     }
 
-    private HashSet<Integer> posInRange(int row, int col, String tower) {
+    private HashSet<Integer> posInRange(int row, int col) {
         HashSet<Integer> inRange = new HashSet<>();
 
         inRange.add(calcPosFromRowCol(row - 1, col));
@@ -973,14 +974,14 @@ public class LandscapeController {
 
     // Testing purposes below
 
-    public void initializeJUnits() {
+    public void initializeM5Tests() {
         pathLocations = new HashSet<>(Arrays.asList(12, 13, 25, 37, 38, 39, 51, 63,
                 75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44));
         testingPathDamage = new HashMap<Integer, Integer>();
     }
 
     public HashMap<Integer, Integer> testPlaceTower(int row, int col, String tower) {
-        HashSet<Integer> positionsInRange = posInRange(row, col, tower);
+        HashSet<Integer> positionsInRange = posInRange(row, col);
         for (int position : pathLocations) {
             if (positionsInRange.contains(position) && positionOnPath(position)) {
                 int newDamage = getDamageForTower(tower);
@@ -990,6 +991,37 @@ public class LandscapeController {
             }
         }
         return testingPathDamage;
+    }
+
+    public void initializeM6Tests() {
+        pathLocations = new HashSet<>(Arrays.asList(12, 13, 25, 37, 38, 39, 51, 63,
+                75, 76, 77, 78, 79, 80, 81, 82, 70, 58, 46, 45, 44));
+        testingPathDamage = new HashMap<Integer, Integer>();
+        this.testUpgrade = 0;
+    }
+
+    public HashMap<Integer, Integer> testUpgradeTower(int row, int col) {
+        if (this.testUpgrade == 1) {
+            HashSet<Integer> positionsInRange = posInRange(row, col);
+            for (int position : pathLocations) {
+                if (positionsInRange.contains(position) && positionOnPath(position)) {
+                    int newDamage = 30;
+                    Integer currDamage = testingPathDamage.get(position);
+                    currDamage = (currDamage == null) ? 0 : currDamage;
+                    testingPathDamage.put(position, newDamage + currDamage);
+                }
+            }
+            this.testUpgrade = 0;
+        }
+        return testingPathDamage;
+    }
+
+    public void purchaseUpgrade() {
+        this.testUpgrade = 1;
+    }
+
+    public HashMap<Integer, Integer> getTestingPathDamage() {
+        return this.testingPathDamage;
     }
 
     //METHOD 2
